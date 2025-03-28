@@ -109,6 +109,8 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	//m_grid.moveTester();
+	//m_grid.testCells();
 }
 
 /// <summary>
@@ -117,8 +119,8 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
+	//m_window.draw(m_welcomeMessage);
+	//m_window.draw(m_logoSprite);
 	m_grid.renderGrid(m_window);
 	m_window.display();
 	
