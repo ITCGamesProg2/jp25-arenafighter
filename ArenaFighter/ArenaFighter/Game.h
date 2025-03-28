@@ -10,7 +10,7 @@
 /// Don't forget the endif at the bottom
 /// </summary>
 #include <SFML/Graphics.hpp>
-
+#include "SpatialPartitionGrid.h"
 class Game
 {
 public:
@@ -37,6 +37,7 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
+	SpatialPartitionGrid m_grid;
 
 };
 
