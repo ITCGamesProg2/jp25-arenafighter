@@ -10,6 +10,8 @@
 /// Don't forget the endif at the bottom
 /// </summary>
 #include <SFML/Graphics.hpp>
+#include <Thor/Resources.hpp>
+#include "Player.h"
 
 class Game
 {
@@ -30,6 +32,10 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
+
+
+	thor::ResourceHolder<sf::Texture, std::string> m_holder;
+	Player m_player;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
