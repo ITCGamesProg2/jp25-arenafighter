@@ -17,6 +17,7 @@ private:
 	void initSprites();
 	void animate(double dt);
 	sf::Sprite m_player;
+	sf::RectangleShape m_hitbox;
 	double m_speed{ 2.0 };
 
 	int m_frameSize = 100;
@@ -27,7 +28,7 @@ private:
 
 	int m_walkFrames = 8;
 	int m_idleFrames = 6;
-	int m_walkRow = 1;
+	int m_walkRow = 0;
 	int m_idleRow = 0;
 
 	int m_playerState = 0; //0: idle   1: moving

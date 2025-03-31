@@ -35,12 +35,13 @@ void Player::handleKeyInput()
 
 sf::FloatRect Player::getBounds()
 {
-	return m_player.getGlobalBounds();
+	return m_hitbox.getGlobalBounds();
 }
 
 
 void Player::update(double dt)
 {
+	m_hitbox.setPosition(m_player.getPosition().x, m_player.getPosition().y - 5);
 	handleKeyInput();
 	animate(dt);
 }
@@ -48,19 +49,27 @@ void Player::update(double dt)
 void Player::render(sf::RenderWindow& window)
 {
 	window.draw(m_player);
+	window.draw(m_hitbox);
 }
 
 void Player::initSprites()
 {
 	std::cout << "player created";
-	m_holder.acquire("playerSprite", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier.png"));
-
-	m_player.setTexture(m_holder["playerSprite"]);
+	m_holder.acquire("playerSpriteIdle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Idle.png"));
+	m_holder.acquire("playerSpriteWalk", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Walk.png"));
+	m_player.setTexture(m_holder["playerSpriteIdle"]);
 
 
 	m_player.setTextureRect(sf::IntRect(0, 0, m_frameSize, m_frameSize));
+
+	m_player.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_player.setScale(3, 3);
 
+	m_hitbox.setSize(sf::Vector2f(40, 50));
+	m_hitbox.setFillColor(sf::Color::Transparent);
+	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
+	m_hitbox.setOutlineColor(sf::Color::Green);
+	m_hitbox.setOutlineThickness(1);
 }
 
 void Player::animate(double dt)
@@ -70,11 +79,17 @@ void Player::animate(double dt)
 	if (m_frameTimer > m_timePerFrame)
 	{
 		if (m_playerState == 1) //sets appropraite frame for character state
-			m_player.setTextureRect(sf::IntRect((m_col*100),(m_walkRow*100) , m_frameSize,m_frameSize));
+		{
+			m_player.setTexture(m_holder["playerSpriteWalk"]);
+			m_player.setTextureRect(sf::IntRect((m_col * 100), (m_walkRow * 100), m_frameSize, m_frameSize));
+		}
 		if (m_playerState == 0)
+		{
+			m_player.setTexture(m_holder["playerSpriteIdle"]);
 			m_player.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
+			
+		}
 		m_col++;
-
 		if ((m_col >= m_walkFrames && m_playerState==1) || (m_col >= m_idleFrames && m_playerState == 0))//resets column if exceeded frames of that row
 		{
 			m_col = 0;
