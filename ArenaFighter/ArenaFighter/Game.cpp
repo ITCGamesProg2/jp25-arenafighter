@@ -53,6 +53,7 @@ void Game::run()
 			timeSinceLastUpdate -= timePerFrame;
 			processEvents(); // at least 60 fps
 			update(timePerFrame); //60 fps
+			m_player.update(static_cast<double>(timePerFrame.asSeconds()));
 #ifdef _DEBUG
 			render(); // want to debug drawing while stepping through code
 #endif // _DEBUG
@@ -119,7 +120,9 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
 	m_window.draw(m_logoSprite);
+	m_player.render(m_window);
 	m_window.display();
+
 }
 
 /// <summary>
