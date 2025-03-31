@@ -59,6 +59,7 @@ void Player::initSprites()
 
 
 	m_player.setTextureRect(sf::IntRect(0, 0, m_frameSize, m_frameSize));
+	m_player.setOrigin(m_player.getGlobalBounds().width / 2, m_player.getGlobalBounds().height / 2);
 	m_player.setScale(3, 3);
 
 }

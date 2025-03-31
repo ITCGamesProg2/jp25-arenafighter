@@ -92,22 +92,7 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
-	if (sf::Keyboard::W == t_event.key.code)
-	{
-		m_playerPosition.y -= m_playerSpeed;
-	}
-	if (sf::Keyboard::S == t_event.key.code)
-	{
-		m_playerPosition.y += m_playerSpeed;
-	}
-	if (sf::Keyboard::A == t_event.key.code)
-	{
-		m_playerPosition.x -= m_playerSpeed;
-	}
-	if (sf::Keyboard::D == t_event.key.code)
-	{
-		m_playerPosition.x += m_playerSpeed;
-	}
+	
 }
 
 /// <summary>
@@ -129,10 +114,9 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_obstacleOne.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_obstacleTwo.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
-	m_grid.insertGameObjectIntoGrid(&m_playerShape.getGlobalBounds());
+	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 
-	m_playerShape.setPosition(m_playerPosition);
-
+	
 	testCollisions();
 }
 
@@ -143,12 +127,11 @@ void Game::render()
 {
 
 	m_window.clear(sf::Color::Black);
-	m_player.render(m_window);
 	m_grid.drawGrid(m_window, &m_player.getBounds());
+	m_player.render(m_window);
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
-	m_window.draw(m_playerShape);
 	m_window.display();
 	
 }
@@ -163,19 +146,15 @@ void Game::setupTest()
 	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
-	//m_playerShape.setSize(sf::Vector2f(50.0f, 50.0f));
 
 	m_obstacleOne.setPosition(200, 200);
 	m_obstacleTwo.setPosition(400, 400);
 	m_obstacleThree.setPosition(600, 600);
-	//m_playerShape.setPosition(100, 100);
 
 	m_obstacleOne.setFillColor(sf::Color::Red);
 	m_obstacleTwo.setFillColor(sf::Color::Red);
 	m_obstacleThree.setFillColor(sf::Color::Red);
-	//m_playerShape.setFillColor(sf::Color::Green);
-
-	//m_playerPosition = m_playerShape.getPosition();
+	
 }
 
 void Game::testCollisions()
