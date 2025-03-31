@@ -1,0 +1,37 @@
+floor always rounds down to the nearest int
+
+floor(wallX / cell width) + (floor (wallY / cell height) * no. of columns)
+
+in practicality: 
+	Take an object located at 87, 539, cells are 144 x 90
+	The formula in words: floor (objectsX / cell width) + (floor ( objectsY / cell height) * no. of Columns)
+	
+	So: floor(87 / 144) + (floor ( 539 / 90) * 10)
+		floor(0.6) + (floor(5.98) * 10)
+		//Remember floor always rounds down to nearest int!!!
+		0 + ( 5 * 10 )
+		50 <=== This is the cell id!
+		
+		
+In arena fighter, the window will be 1400 x 800, so the cells will be 140 X 80
+To redo the formula with my game in mind
+	For an object at 260, 600
+	floor (260 / 140) + (floor (600 / 80) * 10)
+	floor (1.857) + (floor (7.5) * 10)
+		1 + 70
+		71 = cellId :)
+		
+		
+Cells need a width, height
+calculate num of cells using size
+Give cells a rectangle shape
+give them a semi transparent colouring
+		
+		 // Draw the grid
+        for (int i = 0; i < numCellsX; ++i) {
+            for (int j = 0; j < numCellsY; ++j) {
+                // Position each cell in the grid
+                cell.setPosition(i * cellWidth, j * cellHeight);
+                window.draw(cell);
+            }
+        }

@@ -1,6 +1,5 @@
 /// <summary>
-/// author Pete Lowe May 2022
-/// you need to change the above line or lose marks
+/// author Conor Foley March 2025
 /// </summary>
 
 #include "Game.h"
@@ -15,11 +14,10 @@
 /// load and setup thne image
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" }
-	, m_player(m_holder)
+	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
+	, m_player(m_holder), m_exitGame{false}
 {
-	setupFontAndText(); // load font 
-	setupSprite(); // load texture
+	setupTest(); // load texture
 }
 
 /// <summary>
@@ -94,6 +92,22 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	if (sf::Keyboard::W == t_event.key.code)
+	{
+		m_playerPosition.y -= m_playerSpeed;
+	}
+	if (sf::Keyboard::S == t_event.key.code)
+	{
+		m_playerPosition.y += m_playerSpeed;
+	}
+	if (sf::Keyboard::A == t_event.key.code)
+	{
+		m_playerPosition.x -= m_playerSpeed;
+	}
+	if (sf::Keyboard::D == t_event.key.code)
+	{
+		m_playerPosition.x += m_playerSpeed;
+	}
 }
 
 /// <summary>
@@ -108,8 +122,18 @@ void Game::update(sf::Time t_deltaTime)
 	}
 	if (m_exitGame)
 	{
+		m_grid.clearGrid();
 		m_window.close();
 	}
+	m_grid.clearGrid();
+	m_grid.insertGameObjectIntoGrid(&m_obstacleOne.getGlobalBounds());
+	m_grid.insertGameObjectIntoGrid(&m_obstacleTwo.getGlobalBounds());
+	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
+	m_grid.insertGameObjectIntoGrid(&m_playerShape.getGlobalBounds());
+
+	m_playerShape.setPosition(m_playerPosition);
+
+	testCollisions();
 }
 
 /// <summary>
@@ -117,44 +141,73 @@ void Game::update(sf::Time t_deltaTime)
 /// </summary>
 void Game::render()
 {
-	m_window.clear(sf::Color::White);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
+
+	m_window.clear(sf::Color::Black);
 	m_player.render(m_window);
+	m_grid.drawGrid(m_window, &m_playerShape.getGlobalBounds());
+	m_window.draw(m_obstacleOne);
+	m_window.draw(m_obstacleTwo);
+	m_window.draw(m_obstacleThree);
+	m_window.draw(m_playerShape);
 	m_window.display();
-
+	
 }
 
-/// <summary>
-/// load the font and setup the text message for screen
-/// </summary>
-void Game::setupFontAndText()
-{
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
-	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80U);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
-	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
 
+
+/// <summary>
+/// Set up the obstacles to check grid collision
+/// </summary>
+void Game::setupTest()
+{
+	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
+	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
+	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
+	m_playerShape.setSize(sf::Vector2f(50.0f, 50.0f));
+
+	m_obstacleOne.setPosition(200, 200);
+	m_obstacleTwo.setPosition(400, 400);
+	m_obstacleThree.setPosition(600, 600);
+	m_playerShape.setPosition(100, 100);
+
+	m_obstacleOne.setFillColor(sf::Color::Red);
+	m_obstacleTwo.setFillColor(sf::Color::Red);
+	m_obstacleThree.setFillColor(sf::Color::Red);
+	m_playerShape.setFillColor(sf::Color::Green);
+
+	m_playerPosition = m_playerShape.getPosition();
 }
 
-/// <summary>
-/// load the texture and setup the sprite for the logo
-/// </summary>
-void Game::setupSprite()
+void Game::testCollisions()
 {
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
+	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_playerShape.getGlobalBounds());
+
+	resetObstacleColours();
+
+	for (auto &object : nearbyObjects)
 	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
+		if (object.intersects(m_playerShape.getGlobalBounds()))
+		{
+			// Check which obstacle is being collided with and change its color
+			if (object == m_obstacleOne.getGlobalBounds())
+			{
+				m_obstacleOne.setFillColor(sf::Color::Magenta);
+			}
+			else if (object == m_obstacleTwo.getGlobalBounds())
+			{
+				m_obstacleTwo.setFillColor(sf::Color::Magenta);
+			}
+			else if (object == m_obstacleThree.getGlobalBounds())
+			{
+				m_obstacleThree.setFillColor(sf::Color::Magenta);
+			}
+		}
 	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
+}
+
+void Game::resetObstacleColours()
+{
+	m_obstacleOne.setFillColor(sf::Color::Red);
+	m_obstacleTwo.setFillColor(sf::Color::Red);
+	m_obstacleThree.setFillColor(sf::Color::Red);
 }

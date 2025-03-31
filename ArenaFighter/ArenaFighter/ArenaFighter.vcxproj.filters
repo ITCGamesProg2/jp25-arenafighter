@@ -27,7 +27,11 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Player.cpp">
+=======
+    <ClCompile Include="SpatialPartitionGrid.cpp">
+>>>>>>> spatialPartition
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +39,11 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Player.h">
+=======
+    <ClInclude Include="SpatialPartitionGrid.h">
+>>>>>>> spatialPartition
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

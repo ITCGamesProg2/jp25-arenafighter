@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 #include "Player.h"
+#include "SpatialPartitionGrid.h"
 
 class Game
 {
@@ -29,9 +30,11 @@ private:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
-	
-	void setupFontAndText();
-	void setupSprite();
+
+	// This is purely for testing, will remove once I'm happy with how the grid and collisions work
+	void setupTest();
+	void testCollisions();
+	void resetObstacleColours();
 
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
@@ -43,7 +46,14 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
+	SpatialPartitionGrid m_grid{ 140, 80 };
 
+	sf::RectangleShape m_obstacleOne;
+	sf::RectangleShape m_obstacleTwo;
+	sf::RectangleShape m_obstacleThree;
+	sf::RectangleShape m_playerShape;
+	float m_playerSpeed = 5.0f;
+	sf::Vector2f m_playerPosition;
 };
 
 #endif // !GAME_HPP
