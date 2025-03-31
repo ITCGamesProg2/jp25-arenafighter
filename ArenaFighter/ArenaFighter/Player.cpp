@@ -33,6 +33,11 @@ void Player::handleKeyInput()
 
 }
 
+sf::FloatRect Player::getBounds()
+{
+	return m_player.getGlobalBounds();
+}
+
 
 void Player::update(double dt)
 {

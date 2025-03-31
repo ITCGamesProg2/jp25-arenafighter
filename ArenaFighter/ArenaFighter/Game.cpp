@@ -144,7 +144,7 @@ void Game::render()
 
 	m_window.clear(sf::Color::Black);
 	m_player.render(m_window);
-	m_grid.drawGrid(m_window, &m_playerShape.getGlobalBounds());
+	m_grid.drawGrid(m_window, &m_player.getBounds());
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
@@ -163,30 +163,30 @@ void Game::setupTest()
 	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
-	m_playerShape.setSize(sf::Vector2f(50.0f, 50.0f));
+	//m_playerShape.setSize(sf::Vector2f(50.0f, 50.0f));
 
 	m_obstacleOne.setPosition(200, 200);
 	m_obstacleTwo.setPosition(400, 400);
 	m_obstacleThree.setPosition(600, 600);
-	m_playerShape.setPosition(100, 100);
+	//m_playerShape.setPosition(100, 100);
 
 	m_obstacleOne.setFillColor(sf::Color::Red);
 	m_obstacleTwo.setFillColor(sf::Color::Red);
 	m_obstacleThree.setFillColor(sf::Color::Red);
-	m_playerShape.setFillColor(sf::Color::Green);
+	//m_playerShape.setFillColor(sf::Color::Green);
 
-	m_playerPosition = m_playerShape.getPosition();
+	//m_playerPosition = m_playerShape.getPosition();
 }
 
 void Game::testCollisions()
 {
-	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_playerShape.getGlobalBounds());
+	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_player.getBounds());
 
 	resetObstacleColours();
 
 	for (auto &object : nearbyObjects)
 	{
-		if (object.intersects(m_playerShape.getGlobalBounds()))
+		if (object.intersects(m_player.getBounds()))
 		{
 			// Check which obstacle is being collided with and change its color
 			if (object == m_obstacleOne.getGlobalBounds())

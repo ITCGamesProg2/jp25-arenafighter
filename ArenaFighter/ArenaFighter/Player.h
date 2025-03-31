@@ -11,6 +11,7 @@ public:
 	void update(double dt);
 	void render(sf::RenderWindow& window);
 	void handleKeyInput();
+	sf::FloatRect getBounds();
 
 private:
 	void initSprites();
