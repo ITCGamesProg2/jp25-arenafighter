@@ -49,10 +49,13 @@ void Player::update(double dt)
 	animate(dt);
 }
 
-void Player::render(sf::RenderWindow& window)
+void Player::render(sf::RenderWindow& window, bool t_debugMode)
 {
 	window.draw(m_player);
-	window.draw(m_hitbox);
+	if (t_debugMode)
+	{
+		window.draw(m_hitbox);
+	}
 }
 
 void Player::initSprites()
