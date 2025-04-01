@@ -54,6 +54,9 @@ private:
 	sf::RectangleShape m_playerShape;
 	float m_playerSpeed = 5.0f;
 	sf::Vector2f m_playerPosition;
+
+
+	bool m_debugMode = false;
 };
 
 #endif // !GAME_HPP

@@ -92,6 +92,10 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	if (sf::Keyboard::M == t_event.key.code)
+	{
+		m_debugMode = !m_debugMode;
+	}
 	
 }
 
@@ -127,8 +131,8 @@ void Game::render()
 {
 
 	m_window.clear(sf::Color::Black);
-	m_grid.drawGrid(m_window, &m_player.getBounds());
-	m_player.render(m_window);
+	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
+	m_player.render(m_window, m_debugMode);
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);

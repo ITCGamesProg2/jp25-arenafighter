@@ -57,7 +57,7 @@ std::vector<sf::FloatRect> SpatialPartitionGrid::getNearbyObjects(const sf::Floa
 	return nearbyObjects;
 }
 
-void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRect* t_playerBounds)
+void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRect* t_playerBounds, bool t_debugMode)
 {
 	sf::RectangleShape cell;
 	cell.setSize(sf::Vector2f(m_cellWidth, m_cellHeight));
@@ -69,22 +69,25 @@ void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRe
 	int noOfCellsX = t_window.getSize().x / m_cellWidth; 
 	int noOfCellsY = t_window.getSize().y / m_cellHeight;
 
-	for (int x = 0; x < noOfCellsX; x++)
+	if (t_debugMode)
 	{
-		for (int y = 0; y < noOfCellsY; y++)
+		for (int x = 0; x < noOfCellsX; x++)
 		{
-			sf::FloatRect cellBounds(x * m_cellWidth, y * m_cellHeight, m_cellWidth, m_cellHeight);
+			for (int y = 0; y < noOfCellsY; y++)
+			{
+				sf::FloatRect cellBounds(x * m_cellWidth, y * m_cellHeight, m_cellWidth, m_cellHeight);
 
-			if (t_playerBounds && cellBounds.intersects(*t_playerBounds))
-			{
-				cell.setFillColor(sf::Color(255, 0, 0, 128));
+				if (t_playerBounds && cellBounds.intersects(*t_playerBounds))
+				{
+					cell.setFillColor(sf::Color(255, 0, 0, 128));
+				}
+				else
+				{
+					cell.setFillColor(sf::Color(0, 0, 255, 128));
+				}
+				cell.setPosition(x * m_cellWidth, y * m_cellHeight);
+				t_window.draw(cell);
 			}
-			else
-			{
-				cell.setFillColor(sf::Color(0, 0, 255, 128));
-			}
-			cell.setPosition(x * m_cellWidth, y * m_cellHeight);
-			t_window.draw(cell);
 		}
 	}
 
