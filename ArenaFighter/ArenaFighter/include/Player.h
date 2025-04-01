@@ -12,6 +12,8 @@ public:
 	void render(sf::RenderWindow& window, bool t_debugMode);
 	void handleKeyInput();
 	sf::FloatRect getBounds();
+	sf::Vector2f getOrigin();
+	sf::Vector2f getPosition();
 
 private:
 	void initSprites();

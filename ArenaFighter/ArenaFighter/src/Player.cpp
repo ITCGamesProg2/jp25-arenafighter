@@ -41,6 +41,16 @@ sf::FloatRect Player::getBounds()
 	return m_hitbox.getGlobalBounds();
 }
 
+sf::Vector2f Player::getOrigin()
+{
+	return m_player.getOrigin();
+}
+
+sf::Vector2f Player::getPosition()
+{
+	return m_player.getPosition();
+}
+
 
 void Player::update(double dt)
 {

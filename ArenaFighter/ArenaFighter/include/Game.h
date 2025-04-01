@@ -57,6 +57,7 @@ private:
 
 
 	bool m_debugMode = false;
+	sf::VertexArray m_collisionLine;
 };
 
 #endif // !GAME_HPP

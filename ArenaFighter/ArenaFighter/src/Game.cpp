@@ -15,7 +15,7 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}
 {
 	setupTest(); // load texture
 }
@@ -133,6 +133,10 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
 	m_player.render(m_window, m_debugMode);
+	if (m_debugMode)
+	{
+		m_window.draw(m_collisionLine);
+	}
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
@@ -147,6 +151,8 @@ void Game::render()
 /// </summary>
 void Game::setupTest()
 {
+	m_collisionLine[0] = m_player.getOrigin();
+	m_collisionLine[1] = m_player.getOrigin();
 	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
@@ -158,6 +164,10 @@ void Game::setupTest()
 	m_obstacleOne.setFillColor(sf::Color::Red);
 	m_obstacleTwo.setFillColor(sf::Color::Red);
 	m_obstacleThree.setFillColor(sf::Color::Red);
+
+	m_obstacleOne.setOrigin(m_obstacleOne.getGlobalBounds().width / 2, m_obstacleOne.getGlobalBounds().height / 2);
+	m_obstacleTwo.setOrigin(m_obstacleTwo.getGlobalBounds().width / 2, m_obstacleTwo.getGlobalBounds().height / 2);
+	m_obstacleThree.setOrigin(m_obstacleThree.getGlobalBounds().width / 2, m_obstacleThree.getGlobalBounds().height / 2);
 	
 }
 
@@ -165,6 +175,7 @@ void Game::testCollisions()
 {
 	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_player.getBounds());
 
+	m_collisionLine[0] = m_player.getPosition();
 	resetObstacleColours();
 
 	for (auto &object : nearbyObjects)
@@ -175,14 +186,17 @@ void Game::testCollisions()
 			if (object == m_obstacleOne.getGlobalBounds())
 			{
 				m_obstacleOne.setFillColor(sf::Color::Magenta);
+				m_collisionLine[1] = m_obstacleOne.getPosition();
 			}
 			else if (object == m_obstacleTwo.getGlobalBounds())
 			{
 				m_obstacleTwo.setFillColor(sf::Color::Magenta);
+				m_collisionLine[1] = m_obstacleTwo.getPosition();
 			}
 			else if (object == m_obstacleThree.getGlobalBounds())
 			{
 				m_obstacleThree.setFillColor(sf::Color::Magenta);
+				m_collisionLine[1] = m_obstacleThree.getPosition();
 			}
 		}
 	}
