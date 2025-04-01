@@ -15,7 +15,7 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder)
 {
 	setupTest(); // load texture
 }
@@ -52,6 +52,7 @@ void Game::run()
 			processEvents(); // at least 60 fps
 			update(timePerFrame); //60 fps
 			m_player.update(static_cast<double>(timePerFrame.asSeconds()));
+			m_orc.update(static_cast<double>(timePerFrame.asSeconds()));
 #ifdef _DEBUG
 			render(); // want to debug drawing while stepping through code
 #endif // _DEBUG
@@ -137,6 +138,7 @@ void Game::render()
 	{
 		m_window.draw(m_collisionLine);
 	}
+	m_orc.render(m_window);
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);

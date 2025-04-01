@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 #include "Player.h"
+#include "Orc.h"
 #include "SpatialPartitionGrid.h"
 
 class Game
@@ -39,6 +40,7 @@ private:
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	Player m_player;
+	Orc m_orc;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
