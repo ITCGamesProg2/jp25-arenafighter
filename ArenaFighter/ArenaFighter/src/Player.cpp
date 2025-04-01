@@ -30,7 +30,10 @@ void Player::handleKeyInput()
 		m_player.move(m_speed, 0);
 		m_playerState = 1;
 	}
-
+	if (m_playerState == 0 && m_col >= m_idleFrames)
+	{
+		m_col = 0;
+	}
 }
 
 sf::FloatRect Player::getBounds()
