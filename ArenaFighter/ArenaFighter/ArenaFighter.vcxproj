@@ -36,8 +36,10 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SpatialPartitionGrid.h" />
+    <ClInclude Include="Orc.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Orc.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
