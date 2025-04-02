@@ -2,6 +2,19 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
+enum class PlayerState
+{
+	IDLE,		// 0
+	WALKING,	// 1
+	ATTACKING	// 2
+};
+
+enum class Direction
+{
+	LEFT,		// 0
+	RIGHT		// 1
+};
+
 class Player
 {
 public:
@@ -33,8 +46,9 @@ private:
 	int m_walkRow = 0;
 	int m_idleRow = 0;
 
-	int m_playerState = 0; //0: idle   1: moving
-
+	//int m_playerState = 0; //0: idle   1: moving
+	PlayerState m_playerState;
+	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
 
 };
