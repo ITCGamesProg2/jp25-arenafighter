@@ -9,7 +9,7 @@ public:
 
 
 	void update(double dt);
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window,bool debugMode);
 
 	sf::FloatRect getBounds();
 

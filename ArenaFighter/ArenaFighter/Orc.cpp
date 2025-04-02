@@ -18,10 +18,13 @@ void Orc::update(double dt)
 
 }
 
-void Orc::render(sf::RenderWindow& window)
+void Orc::render(sf::RenderWindow& window,bool debugMode)
 {
 	window.draw(m_orc);
-	window.draw(m_hitbox);
+	if (debugMode)
+	{
+		window.draw(m_hitbox);
+	}
 }
 
 void Orc::initSprites()

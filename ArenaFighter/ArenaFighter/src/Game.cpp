@@ -138,7 +138,7 @@ void Game::render()
 	{
 		m_window.draw(m_collisionLine);
 	}
-	m_orc.render(m_window);
+	m_orc.render(m_window, m_debugMode);
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
