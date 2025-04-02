@@ -132,6 +132,7 @@ void Game::render()
 {
 
 	m_window.clear(sf::Color::Black);
+	m_window.draw(m_backgroundSprite);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
 	m_player.render(m_window, m_debugMode);
 	
@@ -174,6 +175,10 @@ void Game::setupTest()
 	m_obstacleOne.setOrigin(m_obstacleOne.getGlobalBounds().width / 2, m_obstacleOne.getGlobalBounds().height / 2);
 	m_obstacleTwo.setOrigin(m_obstacleTwo.getGlobalBounds().width / 2, m_obstacleTwo.getGlobalBounds().height / 2);
 	m_obstacleThree.setOrigin(m_obstacleThree.getGlobalBounds().width / 2, m_obstacleThree.getGlobalBounds().height / 2);
+
+	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/ArenaFloor.png"));
+	m_backgroundSprite.setTexture(m_holder["backImage"]);
+	m_backgroundSprite.setPosition({ 0,0 });
 	
 }
 

@@ -62,6 +62,8 @@ private:
 	bool m_debugMode = false; // Turns on and off the grid and hit boxes for debug
 	
 	sf::VertexArray m_collisionLine; // Contains the co-ords for the line drawn between colliding objects hit-boxes 
+
+	sf::Sprite m_backgroundSprite;
 };
 
 #endif // !GAME_HPP
