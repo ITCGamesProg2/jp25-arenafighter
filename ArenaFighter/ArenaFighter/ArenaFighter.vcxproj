@@ -33,12 +33,16 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cell.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Orc.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SpatialPartitionGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Orc.cpp" />
