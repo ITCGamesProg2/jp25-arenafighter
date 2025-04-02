@@ -11,6 +11,11 @@ sf::FloatRect Orc::getBounds()
 	return m_hitbox.getGlobalBounds();
 }
 
+sf::Vector2f Orc::getPosition()
+{
+	return m_orc.getPosition();
+}
+
 void Orc::update(double dt)
 {
 	m_hitbox.setPosition(m_orc.getPosition().x, m_orc.getPosition().y - 5);

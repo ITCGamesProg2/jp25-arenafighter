@@ -50,16 +50,18 @@ private:
 	bool m_exitGame; // control exiting game
 	SpatialPartitionGrid m_grid{ 140, 80 };
 
-	sf::RectangleShape m_obstacleOne;
+	sf::RectangleShape m_obstacleOne; // Place holders for collision testing
 	sf::RectangleShape m_obstacleTwo;
 	sf::RectangleShape m_obstacleThree;
 	sf::RectangleShape m_playerShape;
 	float m_playerSpeed = 5.0f;
 	sf::Vector2f m_playerPosition;
 
-
-	bool m_debugMode = false;
-	sf::VertexArray m_collisionLine;
+	bool m_collisonPresent = false;
+	
+	bool m_debugMode = false; // Turns on and off the grid and hit boxes for debug
+	
+	sf::VertexArray m_collisionLine; // Contains the co-ords for the line drawn between colliding objects hit-boxes 
 };
 
 #endif // !GAME_HPP

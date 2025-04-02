@@ -28,7 +28,6 @@ Game::~Game()
 {
 }
 
-
 /// <summary>
 /// main game loop
 /// update 60 times per second,
@@ -120,6 +119,7 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_obstacleTwo.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
+	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 
 	
 	testCollisions();
@@ -134,14 +134,18 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
 	m_player.render(m_window, m_debugMode);
-	if (m_debugMode)
-	{
-		m_window.draw(m_collisionLine);
-	}
+	
 	m_orc.render(m_window, m_debugMode);
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
+	if (m_debugMode)
+	{
+		if (m_collisonPresent)
+		{
+			m_window.draw(m_collisionLine);
+		}
+	}
 	m_window.display();
 	
 }
@@ -179,11 +183,12 @@ void Game::testCollisions()
 
 	m_collisionLine[0] = m_player.getPosition();
 	resetObstacleColours();
-
+	m_collisonPresent = false;
 	for (auto &object : nearbyObjects)
 	{
 		if (object.intersects(m_player.getBounds()))
 		{
+			m_collisonPresent = true;
 			// Check which obstacle is being collided with and change its color
 			if (object == m_obstacleOne.getGlobalBounds())
 			{
@@ -200,8 +205,14 @@ void Game::testCollisions()
 				m_obstacleThree.setFillColor(sf::Color::Magenta);
 				m_collisionLine[1] = m_obstacleThree.getPosition();
 			}
+			else if (object == m_orc.getBounds())
+			{
+				m_collisionLine[1] = m_orc.getPosition();
+			}
 		}
+		
 	}
+	
 }
 
 void Game::resetObstacleColours()

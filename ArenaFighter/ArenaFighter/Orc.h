@@ -12,6 +12,7 @@ public:
 	void render(sf::RenderWindow& window,bool debugMode);
 
 	sf::FloatRect getBounds();
+	sf::Vector2f getPosition();
 
 private:
 	void initSprites();
