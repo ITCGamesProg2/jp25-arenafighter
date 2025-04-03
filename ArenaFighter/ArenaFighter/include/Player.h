@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
@@ -15,7 +16,7 @@ enum class Direction
 	RIGHT		// 1
 };
 
-class Player
+class Player : public GameObject
 {
 public:
 	Player(thor::ResourceHolder <sf::Texture, std::string>& t_holder);
@@ -24,9 +25,16 @@ public:
 	void update(double dt);
 	void render(sf::RenderWindow& window, bool t_debugMode);
 	void handleKeyInput();
-	sf::FloatRect getBounds();
+	sf::FloatRect getBounds() const override;
 	sf::Vector2f getOrigin();
-	sf::Vector2f getPosition();
+	sf::Vector2f getPosition() const override;
+
+
+	/// <summary>
+	/// Checks if the player is in the attacking state
+	/// </summary>
+	/// <returns>True is player is attacking otherwise false</returns>
+	bool isAttacking();
 
 private:
 	void initSprites();
@@ -50,5 +58,4 @@ private:
 	PlayerState m_playerState;
 	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
-
 };

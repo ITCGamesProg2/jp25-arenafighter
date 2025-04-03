@@ -1,6 +1,6 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
+#include "GameObject.h"
 
 class SpatialPartitionGrid
 {
@@ -36,6 +36,7 @@ public:
 	/// <returns> A vector containing the bounding boxes of any object near the object the function was called on</returns>
 	std::vector<sf::FloatRect> getNearbyObjects(const sf::FloatRect* t_boundingBox);
 	
+	 
 	void drawGrid(sf::RenderWindow& t_window, const sf::FloatRect* t_playerBounds = nullptr, bool t_debugMode = false);
 
 

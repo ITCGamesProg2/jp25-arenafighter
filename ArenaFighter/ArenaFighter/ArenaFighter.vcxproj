@@ -33,6 +33,7 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HealthSystem.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Orc.h" />
     <ClInclude Include="include\Player.h" />
@@ -40,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\HealthSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Orc.cpp" />
     <ClCompile Include="src\Player.cpp" />

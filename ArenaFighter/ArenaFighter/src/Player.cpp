@@ -54,7 +54,7 @@ void Player::handleKeyInput()
 	}
 }
 
-sf::FloatRect Player::getBounds()
+sf::FloatRect Player::getBounds() const
 {
 	return m_hitbox.getGlobalBounds();
 }
@@ -64,10 +64,11 @@ sf::Vector2f Player::getOrigin()
 	return m_player.getOrigin();
 }
 
-sf::Vector2f Player::getPosition()
+sf::Vector2f Player::getPosition() const
 {
 	return m_player.getPosition();
 }
+
 
 
 void Player::update(double dt)
@@ -136,5 +137,14 @@ void Player::animate(double dt)
 		}
 		m_frameTimer = 0;
 	}
+}
+
+bool Player::isAttacking()
+{
+	if (m_playerState == PlayerState::ATTACKING)
+	{
+		return true;
+	}
+	return false;
 }
 

@@ -1,20 +1,21 @@
 #include "Orc.h"
 #include <iostream>
 Orc::Orc(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
-	: m_holder(t_holder)
+	: m_holder(t_holder), m_orcHealthSystem(100)
 {
 	initSprites();
 }
 
-sf::FloatRect Orc::getBounds()
+sf::FloatRect Orc::getBounds() const
 {
 	return m_hitbox.getGlobalBounds();
 }
 
-sf::Vector2f Orc::getPosition()
+sf::Vector2f Orc::getPosition() const
 {
 	return m_orc.getPosition();
 }
+
 
 void Orc::update(double dt)
 {

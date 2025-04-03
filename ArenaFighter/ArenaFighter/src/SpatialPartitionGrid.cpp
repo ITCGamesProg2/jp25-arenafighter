@@ -57,6 +57,7 @@ std::vector<sf::FloatRect> SpatialPartitionGrid::getNearbyObjects(const sf::Floa
 	return nearbyObjects;
 }
 
+
 void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRect* t_playerBounds, bool t_debugMode)
 {
 	sf::RectangleShape cell;

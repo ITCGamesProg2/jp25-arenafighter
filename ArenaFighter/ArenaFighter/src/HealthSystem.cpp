@@ -1,0 +1,15 @@
+#include "HealthSystem.h"
+
+void HealthSystem::takeDamage(int amount)
+{
+	m_currentHealth -= amount;
+	if (m_currentHealth < 0)
+	{
+		m_currentHealth = 0;
+	}
+}
+
+bool HealthSystem::isAlive() const
+{
+	return m_currentHealth > 0;
+}

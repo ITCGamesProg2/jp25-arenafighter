@@ -1,8 +1,10 @@
 #pragma once
+#include "GameObject.h"
+#include "HealthSystem.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
-class Orc
+class Orc : public GameObject
 {
 public:
 	Orc(thor::ResourceHolder <sf::Texture, std::string>& t_holder);
@@ -11,8 +13,8 @@ public:
 	void update(double dt);
 	void render(sf::RenderWindow& window,bool debugMode);
 
-	sf::FloatRect getBounds();
-	sf::Vector2f getPosition();
+	sf::FloatRect getBounds() const override;
+	sf::Vector2f getPosition() const override; 
 
 private:
 	void initSprites();
@@ -35,5 +37,5 @@ private:
 	int m_orcState = 0; //0: idle   1: moving
 
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
-
+	HealthSystem m_orcHealthSystem;
 };
