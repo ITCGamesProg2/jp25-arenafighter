@@ -34,12 +34,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthSystem.h" />
+    <ClInclude Include="Cell.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Orc.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SpatialPartitionGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HealthSystem.cpp" />
     <ClCompile Include="src\main.cpp" />

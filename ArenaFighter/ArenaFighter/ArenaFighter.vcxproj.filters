@@ -16,7 +16,14 @@
     <ClCompile Include="src\Orc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\HealthSystem.cpp">
+=======
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cell.cpp">
+>>>>>>> gridAndCellsForBreadthFirstSearch
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,7 +40,14 @@
     <ClInclude Include="include\Orc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="HealthSystem.h">
+=======
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+>>>>>>> gridAndCellsForBreadthFirstSearch
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
