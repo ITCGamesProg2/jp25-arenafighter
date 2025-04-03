@@ -78,6 +78,10 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (sf::Event::KeyReleased == newEvent.type) //user released a key
+		{
+			processKeyRelease(newEvent);
+		}
 	}
 }
 
@@ -97,6 +101,15 @@ void Game::processKeys(sf::Event t_event)
 		m_debugMode = !m_debugMode;
 	}
 	
+	
+}
+
+void Game::processKeyRelease(sf::Event t_event)
+{
+	if (sf::Keyboard::Space == t_event.key.code)
+	{
+		m_orc.hasTakenAttackDamage = false;
+	}
 }
 
 /// <summary>
@@ -123,6 +136,7 @@ void Game::update(sf::Time t_deltaTime)
 
 	
 	testCollisions();
+	combatCollisions();
 }
 
 /// <summary>
@@ -225,4 +239,26 @@ void Game::resetObstacleColours()
 	m_obstacleOne.setFillColor(sf::Color::Red);
 	m_obstacleTwo.setFillColor(sf::Color::Red);
 	m_obstacleThree.setFillColor(sf::Color::Red);
+}
+
+void Game::combatCollisions()
+{
+	std::vector<sf::FloatRect> nearbyObjectsPlayer = m_grid.getNearbyObjects(&m_player.getBounds());
+
+	for (auto& object : nearbyObjectsPlayer)
+	{
+		if (object == m_orc.getBounds() && m_player.isAttacking())
+		{
+			if (object.intersects(m_player.getBounds()))
+			{
+				if (!m_orc.hasTakenAttackDamage)
+				{
+					m_orc.m_orcHealthSystem.takeDamage(10);
+					m_orc.hasTakenAttackDamage = true;
+					std::cout << m_orc.m_orcHealthSystem.getHealth() << "\n";
+				}
+			}
+		}
+		
+	}
 }

@@ -9,7 +9,9 @@ class Orc : public GameObject
 public:
 	Orc(thor::ResourceHolder <sf::Texture, std::string>& t_holder);
 
-
+	sf::RectangleShape m_hitbox;
+	HealthSystem m_orcHealthSystem;
+	bool hasTakenAttackDamage = false;
 	void update(double dt);
 	void render(sf::RenderWindow& window,bool debugMode);
 
@@ -20,7 +22,7 @@ private:
 	void initSprites();
 	void animate(double dt);
 	sf::Sprite m_orc;
-	sf::RectangleShape m_hitbox;
+	
 	double m_speed{ 2.0 };
 
 	int m_frameSize = 100;
@@ -36,6 +38,8 @@ private:
 
 	int m_orcState = 0; //0: idle   1: moving
 
+	
+
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
-	HealthSystem m_orcHealthSystem;
+	
 };

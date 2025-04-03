@@ -29,6 +29,7 @@ private:
 
 	void processEvents();
 	void processKeys(sf::Event t_event);
+	void processKeyRelease(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
 
@@ -36,6 +37,8 @@ private:
 	void setupTest();
 	void testCollisions();
 	void resetObstacleColours();
+
+	void combatCollisions();
 
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
@@ -55,7 +58,7 @@ private:
 	sf::RectangleShape m_obstacleThree;
 	sf::RectangleShape m_playerShape;
 	float m_playerSpeed = 5.0f;
-	//sf::Vector2f m_playerPosition;
+
 
 	bool m_collisonPresent = false;
 	

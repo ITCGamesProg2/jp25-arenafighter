@@ -21,6 +21,7 @@ class Player : public GameObject
 public:
 	Player(thor::ResourceHolder <sf::Texture, std::string>& t_holder);
 
+	sf::RectangleShape m_hitbox;
 
 	void update(double dt);
 	void render(sf::RenderWindow& window, bool t_debugMode);
@@ -40,7 +41,7 @@ private:
 	void initSprites();
 	void animate(double dt);
 	sf::Sprite m_player;
-	sf::RectangleShape m_hitbox;
+	
 	double m_speed{ 2.0 };
 
 	int m_frameSize = 100;

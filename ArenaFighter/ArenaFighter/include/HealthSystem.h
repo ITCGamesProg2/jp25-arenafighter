@@ -15,6 +15,8 @@ public:
 /// <returns>True if health is > 0 </returns>
 	bool isAlive() const;
 
+	int getHealth() const;
+
 
 private:
 

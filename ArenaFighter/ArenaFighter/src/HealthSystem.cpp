@@ -13,3 +13,8 @@ bool HealthSystem::isAlive() const
 {
 	return m_currentHealth > 0;
 }
+
+int HealthSystem::getHealth() const
+{
+	return m_currentHealth;
+}

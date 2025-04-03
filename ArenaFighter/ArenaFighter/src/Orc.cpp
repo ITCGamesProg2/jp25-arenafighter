@@ -1,7 +1,7 @@
 #include "Orc.h"
 #include <iostream>
 Orc::Orc(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
-	: m_holder(t_holder), m_orcHealthSystem(100)
+	: m_holder(t_holder), m_orcHealthSystem(1000)
 {
 	initSprites();
 }
