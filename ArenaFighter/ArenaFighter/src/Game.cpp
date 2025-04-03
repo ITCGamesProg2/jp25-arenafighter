@@ -15,7 +15,7 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100,10,10)
 {
 	setupTest(); // load texture
 }
