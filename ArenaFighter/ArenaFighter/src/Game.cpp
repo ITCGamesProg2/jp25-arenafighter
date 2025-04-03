@@ -190,7 +190,7 @@ void Game::setupTest()
 	m_obstacleTwo.setOrigin(m_obstacleTwo.getGlobalBounds().width / 2, m_obstacleTwo.getGlobalBounds().height / 2);
 	m_obstacleThree.setOrigin(m_obstacleThree.getGlobalBounds().width / 2, m_obstacleThree.getGlobalBounds().height / 2);
 
-	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/ArenaFloor.png"));
+	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/floorTiles.png"));
 	m_backgroundSprite.setTexture(m_holder["backImage"]);
 	m_backgroundSprite.setPosition({ 0,0 });
 	
