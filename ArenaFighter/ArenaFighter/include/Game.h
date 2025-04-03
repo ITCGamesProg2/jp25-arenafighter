@@ -13,6 +13,8 @@
 #include <Thor/Resources.hpp>
 #include "Player.h"
 #include "Orc.h"
+#include "Grid.h"
+#include "Cell.h"
 #include "SpatialPartitionGrid.h"
 
 class Game
@@ -44,6 +46,7 @@ private:
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	Player m_player;
 	Orc m_orc;
+	Grid m_searchGrid; //grid for breadth first search
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
