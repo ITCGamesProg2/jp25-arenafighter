@@ -15,9 +15,10 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100,10,10)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100, 10, 10)
 {
 	setupTest(); // load texture
+	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
 }
 
 /// <summary>
@@ -178,7 +179,7 @@ void Game::setupTest()
 	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
 	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
 
-	m_obstacleOne.setPosition(200, 200);
+	m_obstacleOne.setPosition(250, 50);
 	m_obstacleTwo.setPosition(400, 400);
 	m_obstacleThree.setPosition(600, 600);
 

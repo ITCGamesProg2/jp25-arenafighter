@@ -9,7 +9,7 @@ Cell::Cell(int t_cellID, int t_gridRows,int t_gridCols)
 
 void Cell::initCell()
 {
-	std::cout << "\ncell created ID:" << m_cellID;
+	//std::cout << "\ncell created ID:" << m_cellID;
 	setNeighbours();
 }
 
@@ -24,7 +24,8 @@ void Cell::setNeighbours()
 
         int newRow = row + rowOffset[i];
         int newCol = col + colOffset[i];
-        if (newRow >= 0 && newRow < m_gridRows && newCol >= 0 && newCol < m_gridCols) {
+        if (newRow >= 0 && newRow < m_gridRows && newCol >= 0 && newCol < m_gridCols) 
+        {
             m_neighbours.emplace_back((newRow * m_gridCols + newCol));
         }
     }
