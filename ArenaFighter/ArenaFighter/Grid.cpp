@@ -28,3 +28,40 @@ void Grid::markGrids(sf::RectangleShape& t_rect1, sf::RectangleShape& t_rect2, s
         }
     }
 }
+
+std::vector<int> Grid::breadthFirst(int t_startCellId, int t_destCellId)
+{
+    std::queue<int> cellQueue;
+
+    bool goalReached = false;
+    cells[t_startCellId].setMarked(true);
+
+    std::vector<int> previousCell;//stores path
+
+    cellQueue.push(t_startCellId);
+
+    while (cellQueue.size() > 0 && !goalReached)
+    {
+        int currentCell = cellQueue.front();
+        std::vector<int> neighbours = cells[currentCell].getNeighbours(); //creates a vector of neibhbours id's
+        for (int neighbourID : neighbours) 
+        {  // Loop through neighbour IDs
+
+            if (neighbourID == t_destCellId)
+            {
+                goalReached = true;
+                previousCell.push_back(currentCell);
+            }
+
+            else if (!cells[neighbourID].isMarked())
+            {
+                cells[neighbourID].setMarked(true);
+                cellQueue.push(neighbourID);
+            }
+        }
+        cellQueue.pop();//removes cell from front of queue
+    }
+
+
+    return previousCell;
+}
