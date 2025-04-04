@@ -15,13 +15,14 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100, 10, 10)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100, 10 , 10)
 {
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
-	std::vector<int> vector = m_searchGrid.breadthFirst(2, 5);
 
-	std::cout << "\n\n breath search: ";
+	std::vector<int> vector = m_searchGrid.breadthFirst(3, 95);//calls search function with start 2 and destionation 5
+
+	std::cout << "\n\n breath search: "; //output result
 	for (int i : vector) {
 		std::cout << i << " ";
 	}

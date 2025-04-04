@@ -24,7 +24,7 @@ private:
 
 
 
-	int m_cellWidth = 100;
-	int m_cellHeight = 100;
+	int m_cellWidth = 140;
+	int m_cellHeight = 80;
 	std::vector<Cell> cells;
 };
