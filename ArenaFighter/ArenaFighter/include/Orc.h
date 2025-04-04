@@ -4,6 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
+enum class OrcState
+{
+	IDLE,		// 0
+	WALKING,	// 1
+	ATTACKING	// 2
+};
+
 class Orc : public GameObject
 {
 public:
@@ -19,7 +26,7 @@ public:
 	sf::Vector2f getPosition() const override; 
 
 	/// <summary>
-	/// Positions the healthbox over the orc, updates health bar visuals
+	/// Positions the healthbox over the orc, updates health bar visuals to reflect changes in health
 	/// </summary>
 	void updtateHealthbar();
 
@@ -41,7 +48,7 @@ private:
 	int m_walkRow = 0;
 	int m_idleRow = 0;
 
-	int m_orcState = 0; //0: idle   1: moving
+	OrcState m_orcState = OrcState::IDLE; //0: idle   1: moving
 
 	sf::RectangleShape m_healthBar;
 	sf::RectangleShape m_healthBarBack;
