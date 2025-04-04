@@ -21,6 +21,7 @@ void Orc::update(double dt)
 {
 	m_hitbox.setPosition(m_orc.getPosition().x, m_orc.getPosition().y - 5);
 	animate(dt);
+	updtateHealthbar();
 
 }
 
@@ -31,6 +32,20 @@ void Orc::render(sf::RenderWindow& window,bool debugMode)
 	{
 		window.draw(m_hitbox);
 	}
+	if (m_orcHealthSystem.getHealth() < 1000)
+	{
+		window.draw(m_healthBarBack);
+		window.draw(m_healthBar);
+	}
+}
+
+void Orc::updtateHealthbar()
+{
+	float healthPercentage = static_cast<float>(m_orcHealthSystem.getHealth()) / m_orcHealthSystem.getMaxHealth();
+
+	m_healthBar.setSize(sf::Vector2f{ 50 * healthPercentage, 15 });
+	m_healthBar.setPosition(sf::Vector2f(m_orc.getPosition().x, m_orc.getPosition().y - 40));
+	m_healthBarBack.setPosition(sf::Vector2f(m_orc.getPosition().x, m_orc.getPosition().y - 40));
 }
 
 void Orc::initSprites()
@@ -51,6 +66,16 @@ void Orc::initSprites()
 	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
 	m_hitbox.setOutlineColor(sf::Color::Green);
 	m_hitbox.setOutlineThickness(1);
+
+	m_healthBar.setSize({ 50, 15 });
+	m_healthBar.setOrigin(m_healthBar.getSize().x / 2, m_healthBar.getSize().y / 2);
+	m_healthBar.setFillColor(sf::Color::Green);
+	m_healthBar.setPosition(m_orc.getPosition().x, m_orc.getPosition().y - 40);
+
+	m_healthBarBack.setFillColor(sf::Color::Red);
+	m_healthBarBack.setSize({ 50, 15 });
+	m_healthBarBack.setOrigin(m_healthBarBack.getSize().x / 2, m_healthBarBack.getSize().y / 2);
+	m_healthBarBack.setPosition(m_orc.getPosition().x, m_orc.getPosition().y - 40);
 }
 
 void Orc::animate(double dt)

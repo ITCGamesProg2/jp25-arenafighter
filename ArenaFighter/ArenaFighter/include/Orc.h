@@ -18,6 +18,11 @@ public:
 	sf::FloatRect getBounds() const override;
 	sf::Vector2f getPosition() const override; 
 
+	/// <summary>
+	/// Positions the healthbox over the orc, updates health bar visuals
+	/// </summary>
+	void updtateHealthbar();
+
 private:
 	void initSprites();
 	void animate(double dt);
@@ -38,7 +43,8 @@ private:
 
 	int m_orcState = 0; //0: idle   1: moving
 
-	
+	sf::RectangleShape m_healthBar;
+	sf::RectangleShape m_healthBarBack;
 
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
 	

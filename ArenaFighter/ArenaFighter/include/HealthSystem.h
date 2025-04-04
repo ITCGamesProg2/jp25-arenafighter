@@ -17,6 +17,8 @@ public:
 
 	int getHealth() const;
 
+	int getMaxHealth() const;
+
 
 private:
 
