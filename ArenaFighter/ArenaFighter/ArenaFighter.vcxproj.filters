@@ -25,6 +25,9 @@
     <ClCompile Include="src\SpatialPartitionGrid.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="LevelData.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h">
@@ -46,6 +49,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\HealthSystem.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelData.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

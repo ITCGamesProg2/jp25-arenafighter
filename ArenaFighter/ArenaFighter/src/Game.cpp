@@ -14,8 +14,8 @@
 /// load and setup thne image
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ 1400U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100,10,10)
+	m_window{ sf::VideoMode{ 1408U, 800U, 32U }, "SFML Game" }
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder),m_searchGrid(100,10,10), m_level(m_holder)
 {
 	setupTest(); // load texture
 }
@@ -147,6 +147,7 @@ void Game::render()
 
 	m_window.clear(sf::Color::Black);
 	m_window.draw(m_backgroundSprite);
+	m_level.renderLevel(m_window);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
 	m_player.render(m_window, m_debugMode);
 	
@@ -193,6 +194,8 @@ void Game::setupTest()
 	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/floorTiles.png"));
 	m_backgroundSprite.setTexture(m_holder["backImage"]);
 	m_backgroundSprite.setPosition({ 0,0 });
+
+	m_level.initLevel();
 	
 }
 

@@ -16,6 +16,7 @@
 #include "Grid.h"
 #include "Cell.h"
 #include "SpatialPartitionGrid.h"
+#include "LevelData.h"
 
 class Game
 {
@@ -70,6 +71,8 @@ private:
 	sf::VertexArray m_collisionLine; // Contains the co-ords for the line drawn between colliding objects hit-boxes 
 
 	sf::Sprite m_backgroundSprite;
+
+	LevelData m_level;
 };
 
 #endif // !GAME_HPP
