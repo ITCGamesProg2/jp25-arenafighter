@@ -18,3 +18,8 @@ int HealthSystem::getHealth() const
 {
 	return m_currentHealth;
 }
+
+int HealthSystem::getMaxHealth() const
+{
+	return m_maxHealth;
+}
