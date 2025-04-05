@@ -30,12 +30,19 @@ public:
 	/// </summary>
 	void updtateHealthbar();
 
+	void setMovePath(std::vector<int>);
+
 private:
+	void gridToCoordinate();
 	void initSprites();
 	void animate(double dt);
 	sf::Sprite m_orc;
 	
-	double m_speed{ 2.0 };
+	sf::Vector2f m_moveNormal;
+
+	int nextCell;
+	sf::Vector2f nextCoordinates;
+	
 
 	int m_frameSize = 100;
 	double m_frameTimer = 0.0;
@@ -47,6 +54,10 @@ private:
 	int m_idleFrames = 6;
 	int m_walkRow = 0;
 	int m_idleRow = 0;
+
+	float m_speed = 0.5;
+
+	std::vector<int> movePath;
 
 	OrcState m_orcState = OrcState::IDLE; //0: idle   1: moving
 

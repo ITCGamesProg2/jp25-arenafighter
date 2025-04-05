@@ -59,6 +59,13 @@ void Game::run()
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > timePerFrame)
 		{
+
+
+			if (m_player.updateGrid(m_searchGrid.coordinateToGrid(m_player.getPosition()))) //if player has moved to a new grid
+			{//give orc new move path VVVV
+				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
+			}
+
 			timeSinceLastUpdate -= timePerFrame;
 			processEvents(); // at least 60 fps
 			update(timePerFrame); //60 fps

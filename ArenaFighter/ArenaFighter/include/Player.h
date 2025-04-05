@@ -36,7 +36,7 @@ public:
 	/// </summary>
 	/// <returns>True is player is attacking otherwise false</returns>
 	bool isAttacking();
-
+	bool updateGrid(int);
 private:
 	void initSprites();
 	void animate(double dt);
@@ -49,6 +49,7 @@ private:
 	double m_timePerFrame = 0.1;
 	int currentFrame = 0;
 	int m_col = 0;
+	int m_currentGrid = -1;
 
 	int m_walkFrames = 8;
 	int m_idleFrames = 6;

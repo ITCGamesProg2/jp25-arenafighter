@@ -1,5 +1,7 @@
 #include "Orc.h"
 #include <iostream>
+#include <Thor/Vectors/VectorAlgebra2D.hpp>
+
 Orc::Orc(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
 	: m_holder(t_holder), m_orcHealthSystem(100)
 {
@@ -16,12 +18,34 @@ sf::Vector2f Orc::getPosition() const
 	return m_orc.getPosition();
 }
 
+void Orc::setMovePath(std::vector<int> cellPath)
+{
+	movePath = cellPath;//sets to new path
+	movePath.pop_back();//removes orc current cell location
+	nextCell = movePath.back();//sets the next cell for orc to go to
+}
 
 void Orc::update(double dt)
 {
 	m_hitbox.setPosition(m_orc.getPosition().x, m_orc.getPosition().y - 5);
 	animate(dt);
 	updtateHealthbar();
+
+	gridToCoordinate();
+	m_moveNormal = nextCoordinates - m_orc.getPosition();
+	m_moveNormal = thor::unitVector (m_moveNormal);//gets move normal
+	m_moveNormal = m_moveNormal * m_speed;
+	m_orc.move(m_moveNormal);
+
+	float distanceX = m_orc.getPosition().x - nextCoordinates.x;
+	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
+	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
+
+	if (distance < 10 && movePath.size() >= 2)//orc has reached next cell
+	{
+		movePath.pop_back();//remove cell from vector
+		nextCell = movePath.back();//set next cell to go to
+	}
 
 }
 
@@ -102,4 +126,11 @@ void Orc::animate(double dt)
 		}
 		m_frameTimer = 0;
 	}
+}
+
+void Orc::gridToCoordinate()//gets center of grid for orc to move towards
+{
+	int row = nextCell / 10;
+	int col = nextCell % 10;
+	nextCoordinates = sf::Vector2f((col * 140) + 70, (row * 80) + 40);//the coordinates for orc to travel to (centre of cell)
 }

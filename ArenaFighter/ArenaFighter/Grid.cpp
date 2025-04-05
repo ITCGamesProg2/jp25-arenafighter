@@ -26,13 +26,18 @@ void Grid::markGrids(sf::RectangleShape& t_rect1, sf::RectangleShape& t_rect2, s
         {//need to change to a vector of objects/shapes for when obstacles are fully added
             cells[i].setMarked(true);
         }
+        else
+        {
+            cells[i].setMarked(false);
+        }
     }
 }
 
 std::vector<int> Grid::breadthFirst(int t_startCellId, int t_destCellId)
 {
+    
     std::queue<int> cellQueue;//the queue of cells that need to be checked
-
+    markGrids(m_rect1, m_rect2, m_rect3);
     bool goalReached = false;//is destination found?
     cells[t_startCellId].setMarked(true);//mark starting cell as we dont need to search it
 

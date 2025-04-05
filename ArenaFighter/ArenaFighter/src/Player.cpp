@@ -148,3 +148,12 @@ bool Player::isAttacking()
 	return false;
 }
 
+bool Player::updateGrid(int grid) //returns true if player has moved to a new grid
+{
+	if (grid != m_currentGrid)
+	{
+		m_currentGrid = grid;
+		return true;
+	}
+	return false;
+}
