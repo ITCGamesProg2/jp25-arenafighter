@@ -55,7 +55,7 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
-	SpatialPartitionGrid m_grid{ 100, 100 };
+	SpatialPartitionGrid m_grid{ 140, 80 };
 
 	sf::RectangleShape m_obstacleOne; // Place holders for collision testing
 	sf::RectangleShape m_obstacleTwo;
