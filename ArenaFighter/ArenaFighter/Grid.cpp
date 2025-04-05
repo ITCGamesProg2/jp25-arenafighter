@@ -85,3 +85,10 @@ std::vector<int> Grid::breadthFirst(int t_startCellId, int t_destCellId)
     return cellPath;//returns final path
 
 }
+
+int Grid::coordinateToGrid(sf::Vector2f coordinate)
+{
+    int col = (coordinate.x / m_cellWidth);
+    int row = (coordinate.y / m_cellHeight);
+    return (row * m_gridCols + col);
+}

@@ -27,6 +27,8 @@ Game::Game() :
 		std::cout << i << " ";
 	}
 
+	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
+
 
 }
 

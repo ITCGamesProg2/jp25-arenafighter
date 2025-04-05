@@ -11,6 +11,8 @@ public:
 
 	std::vector<int> breadthFirst(int t_startCellId, int t_destCellId);
 
+
+	int coordinateToGrid(sf::Vector2f);
 private:
 	void initGrid();
 	int m_gridSize;
