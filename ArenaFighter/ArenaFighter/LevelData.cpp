@@ -44,63 +44,63 @@ void LevelData::initLevel()
 		{
 			m_levelSpriteRectangles[i][j].setSize(sf::Vector2f{ 16,16 });
 
-			if (m_levelData[i][j] == 0)
+			if (m_levelData[i][j] == 0) // Top row middle tiles
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 16,0,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 1)
+			if (m_levelData[i][j] == 1) // Top Left Corner
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 0,0,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 2)
+			if (m_levelData[i][j] == 2) // Top Right Corner
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 80,0,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 3)
+			if (m_levelData[i][j] == 3) // Bottom left corner
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 0,64,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 4)
+			if (m_levelData[i][j] == 4) // Bottom Right Corner
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 80,64,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 5)
+			if (m_levelData[i][j] == 5) // Bottom row middle tiles
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 16,64,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 6)
+			if (m_levelData[i][j] == 6) // Floor Tiles
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 32,32,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 7)
+			if (m_levelData[i][j] == 7) // Left Wall middle tiles
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 0,16,16,16 });
 				m_levelSpriteRectangles[i][j].setScale(2.0, 2.0);
 				m_levelSpriteRectangles[i][j].setPosition(32 * j, 32 * i);
 			}
-			if (m_levelData[i][j] == 8)
+			if (m_levelData[i][j] == 8) // Right wall middle tiles
 			{
 				m_levelSpriteRectangles[i][j].setTexture(&texture);
 				m_levelSpriteRectangles[i][j].setTextureRect(sf::IntRect{ 80,0,16,16 });
