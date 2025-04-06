@@ -21,8 +21,18 @@ sf::Vector2f Orc::getPosition() const
 void Orc::setMovePath(std::vector<int> cellPath)
 {
 	movePath = cellPath;//sets to new path
-	movePath.pop_back();//removes orc current cell location
 	nextCell = movePath.back();//sets the next cell for orc to go to
+	movePath.pop_back();//removes orc current cell location
+	if (!movePath.empty())
+	{
+		nextCell = movePath.back();//sets the next cell for orc to go to
+		m_orcState = OrcState::WALKING; //orc needs to walk to destination
+
+	}
+	else
+	{
+		m_orcState = OrcState::IDLE; //orc is in same area as destination
+	}
 }
 
 void Orc::update(double dt)
@@ -41,11 +51,21 @@ void Orc::update(double dt)
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
 	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
 
-	if (distance < 10 && movePath.size() >= 2)//orc has reached next cell
+	if (distance < 10)//orc has reached next cell
 	{
-		movePath.pop_back();//remove cell from vector
-		nextCell = movePath.back();//set next cell to go to
+		if (movePath.size() == 1)
+		{
+			m_orcState = OrcState::IDLE; //orc is has reached destination
+			std::cout << "setting idle from update";
+		}
+		if (movePath.size() >= 2)
+		{
+			movePath.pop_back();//remove cell from vector
+			nextCell = movePath.back();//set next cell to go to
+		}
+
 	}
+
 
 }
 

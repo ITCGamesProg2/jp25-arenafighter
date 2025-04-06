@@ -20,7 +20,7 @@ Game::Game() :
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
 
-	std::vector<int> vector = m_searchGrid.breadthFirst(3, 95);//calls search function with start 2 and destionation 5
+	std::vector<int> vector = m_searchGrid.breadthFirst(3, 3);//calls search function with start and destination
 
 	std::cout << "\n\n breath search: "; //output result
 	for (int i : vector) {
