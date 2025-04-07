@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
+#include <Thor/Vectors/VectorAlgebra2D.hpp>
 
 enum class PlayerState
 {

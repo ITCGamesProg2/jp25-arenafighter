@@ -10,32 +10,41 @@ void Player::handleKeyInput()
 {
 	m_playerState = PlayerState::IDLE;
 	m_hitbox.setSize(sf::Vector2f(40, 50));
+	sf::Vector2f movement(0.f, 0.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		m_player.move(0, -m_speed);
+		movement.y = -1;
 		m_playerState = PlayerState::WALKING;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		m_player.move(0,m_speed);
+		movement.y = 1;
 		m_playerState = PlayerState::WALKING;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		m_player.move( -m_speed,0);
+		movement.x = -1;
 		m_playerState = PlayerState::WALKING;
 		m_player.setScale(-3.0, 3.0);
 		m_playerDirection = Direction::LEFT;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		m_player.move(m_speed, 0);
+		movement.x = 1;
 		m_playerState = PlayerState::WALKING;
 		m_player.setScale(3.0, 3.0);
 		m_playerDirection = Direction::RIGHT;
 	}
 
-	if (m_player.getPosition().x > 1355)
+	if (movement.x != 0 || movement.y != 0)
+	{
+		movement = thor::unitVector(movement);
+		movement.x = movement.x * m_speed;
+		movement.y = movement.y * m_speed;
+		m_player.move(movement);
+	}
+
+	if (m_player.getPosition().x > 1355) //border checking for player (custom values to match map wall sizes)
 	{
 		m_player.setPosition(1355, m_player.getPosition().y);
 	}
