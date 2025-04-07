@@ -252,7 +252,7 @@ void Game::testCollisions()
 			{
 				m_collisionLine[1] = m_orc.getPosition();
 			}
-			else if (object == m_pickup.getHitbox());
+			else if (object == m_pickup.getHitbox())
 			{
 				m_collisionLine[1] = m_pickup.returnHitboxPosition();
 			}
