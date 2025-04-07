@@ -37,9 +37,14 @@ public:
 	/// <returns>True is player is attacking otherwise false</returns>
 	bool isAttacking();
 	bool updateGrid(int);
+
+	void keepPlayerInBounds();
 private:
 	void initSprites();
 	void animate(double dt);
+
+	
+
 	sf::Sprite m_player;
 	
 	double m_speed{ 2.0 };

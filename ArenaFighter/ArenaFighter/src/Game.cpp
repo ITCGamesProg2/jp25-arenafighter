@@ -153,7 +153,7 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 
-	
+	m_player.keepPlayerInBounds();
 	testCollisions();
 	combatCollisions();
 }

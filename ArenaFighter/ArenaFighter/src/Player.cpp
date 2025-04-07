@@ -100,7 +100,7 @@ void Player::initSprites()
 
 	m_player.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_player.setScale(3, 3);
-
+	m_player.setPosition(500, 500);
 	m_hitbox.setSize(sf::Vector2f(40, 50));
 	m_hitbox.setFillColor(sf::Color::Transparent);
 	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
@@ -136,6 +136,32 @@ void Player::animate(double dt)
 			m_col = 0;
 		}
 		m_frameTimer = 0;
+	}
+}
+
+void Player::keepPlayerInBounds()
+{
+	sf::Vector2f playerPosition = m_player.getPosition();
+
+	if (m_player.getPosition().x >= 1360)
+	{
+		playerPosition.x -= 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().x <= 50)
+	{
+		playerPosition.x += 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().y >= 750)
+	{
+		playerPosition.y -= 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().y <= 50)
+	{
+		playerPosition.y += 5;
+		m_player.setPosition(playerPosition);
 	}
 }
 
