@@ -34,6 +34,27 @@ void Player::handleKeyInput()
 		m_player.setScale(3.0, 3.0);
 		m_playerDirection = Direction::RIGHT;
 	}
+
+	if (m_player.getPosition().x > 1355)
+	{
+		m_player.setPosition(1355, m_player.getPosition().y);
+	}
+
+	if (m_player.getPosition().x < 50)
+	{
+		m_player.setPosition(50, m_player.getPosition().y);
+	}
+
+	if (m_player.getPosition().y > 745)
+	{
+		m_player.setPosition(m_player.getPosition().x, 745);
+	}
+
+	if (m_player.getPosition().y < 30)
+	{
+		m_player.setPosition(m_player.getPosition().x, 30);
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_playerState = PlayerState::ATTACKING;
@@ -100,6 +121,7 @@ void Player::initSprites()
 
 	m_player.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_player.setScale(3, 3);
+	m_player.setPosition(100, 100);
 
 	m_hitbox.setSize(sf::Vector2f(40, 50));
 	m_hitbox.setFillColor(sf::Color::Transparent);
