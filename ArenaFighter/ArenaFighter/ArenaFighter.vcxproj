@@ -41,11 +41,13 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SpatialPartitionGrid.h" />
     <ClInclude Include="LevelData.h" />
+    <ClInclude Include="Pickups.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="LevelData.cpp" />
+    <ClCompile Include="Pickups.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HealthSystem.cpp" />
     <ClCompile Include="src\main.cpp" />

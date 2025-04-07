@@ -17,6 +17,7 @@
 #include "Cell.h"
 #include "SpatialPartitionGrid.h"
 #include "LevelData.h"
+#include "Pickups.h"
 
 class Game
 {
@@ -73,6 +74,8 @@ private:
 	sf::Sprite m_backgroundSprite;
 
 	LevelData m_level;
+
+	Pickup m_pickup;
 };
 
 #endif // !GAME_HPP

@@ -15,7 +15,7 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1408U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10), m_level(m_holder)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10), m_level(m_holder), m_pickup(m_holder)
 {
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
@@ -152,6 +152,7 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
+	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
 
 	m_player.keepPlayerInBounds();
 	testCollisions();
@@ -168,6 +169,7 @@ void Game::render()
 	m_window.draw(m_backgroundSprite);
 	m_level.renderLevel(m_window);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
+	m_pickup.renderickups(m_window, m_debugMode);
 	m_player.render(m_window, m_debugMode);
 	
 	m_orc.render(m_window, m_debugMode);
@@ -249,6 +251,10 @@ void Game::testCollisions()
 			else if (object == m_orc.getBounds())
 			{
 				m_collisionLine[1] = m_orc.getPosition();
+			}
+			else if (object == m_pickup.getHitbox());
+			{
+				m_collisionLine[1] = m_pickup.returnHitboxPosition();
 			}
 		}
 		
