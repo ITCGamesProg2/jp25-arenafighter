@@ -19,17 +19,7 @@ Game::Game() :
 {
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
-
-	std::vector<int> vector = m_searchGrid.breadthFirst(3, 3);//calls search function with start and destination
-
-	std::cout << "\n\n breath search: "; //output result
-	for (int i : vector) {
-		std::cout << i << " ";
-	}
-
-	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
-
-
+	setupText();
 }
 
 /// <summary>
@@ -72,6 +62,8 @@ void Game::run()
 			update(timePerFrame); //60 fps
 			m_player.update(static_cast<double>(timePerFrame.asSeconds()));
 			m_orc.update(static_cast<double>(timePerFrame.asSeconds()));
+			m_score = m_orc.getDeaths();
+			m_scoreText.setString("Score: " + std::to_string(m_score));
 #ifdef _DEBUG
 			render(); // want to debug drawing while stepping through code
 #endif // _DEBUG
@@ -175,6 +167,7 @@ void Game::render()
 	m_window.draw(m_obstacleOne);
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
+	m_window.draw(m_scoreText);
 	if (m_debugMode)
 	{
 		if (m_collisonPresent)
@@ -284,4 +277,13 @@ void Game::combatCollisions()
 		}
 		
 	}
+}
+
+void Game::setupText()
+{
+	m_fontHolder.acquire("scoreFont", thor::Resources::fromFile<sf::Font>("ASSETS/FONTS/PixelPurl.ttf"));
+	m_scoreText.setFont(m_fontHolder["scoreFont"]);
+	m_scoreText.setPosition(50, 30);
+	m_scoreText.setCharacterSize(34);
+	m_scoreText.setFillColor(sf::Color::White);
 }

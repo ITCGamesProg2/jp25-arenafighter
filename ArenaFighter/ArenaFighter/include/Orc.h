@@ -34,6 +34,8 @@ public:
 
 	void setMovePath(std::vector<int>);
 
+	int getDeaths();
+
 private:
 	void gridToCoordinate();
 	void initSprites();
@@ -58,6 +60,8 @@ private:
 	int m_idleFrames = 6;
 	int m_walkRow = 0;
 	int m_idleRow = 0;
+
+	int m_deaths = 0;
 
 	float m_speed = 0.5;
 

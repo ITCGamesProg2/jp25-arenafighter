@@ -42,12 +42,15 @@ private:
 	void resetObstacleColours();
 
 	void combatCollisions();
-
+	void setupText();
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
+	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;
 	Player m_player;
 	Orc m_orc;
 	Grid m_searchGrid; //grid for breadth first search
+
+	sf::Text m_scoreText;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -63,6 +66,7 @@ private:
 	sf::RectangleShape m_playerShape;
 	float m_playerSpeed = 5.0f;
 
+	int m_score = 0;
 
 	bool m_collisonPresent = false;
 	

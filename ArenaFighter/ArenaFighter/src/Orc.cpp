@@ -80,6 +80,7 @@ void Orc::update(double dt)
 	if (m_orcHealthSystem.getHealth() <= 0)
 	{
 		respawn();
+		m_deaths++;
 	}
 
 }
@@ -140,9 +141,12 @@ void Orc::initSprites()
 void Orc::animate(double dt)
 {
 	m_frameTimer = m_frameTimer + dt;
-
 	if (m_frameTimer > m_timePerFrame)
 	{
+		if ((m_col >= m_walkFrames && m_orcState == OrcState::WALKING) || (m_col >= m_idleFrames && m_orcState == OrcState::IDLE))//resets column if exceeded frames of that row
+		{
+			m_col = 0;
+		}
 		if (m_orcState == OrcState::WALKING) //sets appropraite frame for character state
 		{
 			m_orc.setTexture(m_holder["OrcSpriteWalk"]);
@@ -155,10 +159,6 @@ void Orc::animate(double dt)
 
 		}
 		m_col++;
-		if ((m_col >= m_walkFrames && m_orcState == OrcState::WALKING) || (m_col >= m_idleFrames && m_orcState == OrcState::IDLE))//resets column if exceeded frames of that row
-		{
-			m_col = 0;
-		}
 		m_frameTimer = 0;
 	}
 }
@@ -174,4 +174,9 @@ void Orc::respawn()
 {
 	m_orc.setPosition(700, 400);
 	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
+}
+
+int Orc::getDeaths()
+{
+	return m_deaths;
 }
