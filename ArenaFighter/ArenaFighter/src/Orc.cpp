@@ -53,10 +53,10 @@ void Orc::update(double dt)
 
 	if (distance < 10)//orc has reached next cell
 	{
+		std::cout << "\nreached cell";
 		if (movePath.size() == 1)
 		{
 			m_orcState = OrcState::IDLE; //orc is has reached destination
-			std::cout << "setting idle from update";
 		}
 		if (movePath.size() >= 2)
 		{
