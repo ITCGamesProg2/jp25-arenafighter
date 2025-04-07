@@ -19,6 +19,7 @@ public:
 
 	int getMaxHealth() const;
 
+	void setHealth(int);
 
 private:
 

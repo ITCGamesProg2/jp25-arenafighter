@@ -38,6 +38,8 @@ private:
 	void gridToCoordinate();
 	void initSprites();
 	void animate(double dt);
+	void respawn();
+
 	sf::Sprite m_orc;
 	
 	sf::Vector2f m_moveNormal;

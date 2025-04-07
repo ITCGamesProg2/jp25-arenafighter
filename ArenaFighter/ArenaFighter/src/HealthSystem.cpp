@@ -23,3 +23,9 @@ int HealthSystem::getMaxHealth() const
 {
 	return m_maxHealth;
 }
+
+void HealthSystem::setHealth(int health) 
+{
+	m_currentHealth = health;
+}
+

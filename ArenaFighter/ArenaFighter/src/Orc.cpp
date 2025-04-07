@@ -51,12 +51,12 @@ void Orc::update(double dt)
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
 	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
 
-	if (m_orc.getPosition().x > nextCoordinates.x)
+	if ((m_orc.getPosition().x > nextCoordinates.x) && m_orcState == OrcState::WALKING)
 	{
 		m_orcDirection = Direction::LEFT;
 		m_orc.setScale(-3, 3);
 	}
-	else
+	else if (m_orcState == OrcState::WALKING)
 	{
 		m_orcDirection = Direction::RIGHT;
 		m_orc.setScale(3, 3);
@@ -77,7 +77,10 @@ void Orc::update(double dt)
 		}
 
 	}
-
+	if (m_orcHealthSystem.getHealth() <= 0)
+	{
+		respawn();
+	}
 
 }
 
@@ -165,4 +168,10 @@ void Orc::gridToCoordinate()//gets center of grid for orc to move towards
 	int row = nextCell / 10;
 	int col = nextCell % 10;
 	nextCoordinates = sf::Vector2f((col * 140) + 70, (row * 80) + 40);//the coordinates for orc to travel to (centre of cell)
+}
+
+void Orc::respawn()
+{
+	m_orc.setPosition(700, 400);
+	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
 }
