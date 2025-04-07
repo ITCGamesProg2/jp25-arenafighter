@@ -25,7 +25,7 @@ void Grid::markGrids(sf::RectangleShape& t_rect1, sf::RectangleShape& t_rect2, s
         if (cellRect.intersects(t_rect1.getGlobalBounds()) || cellRect.intersects(t_rect2.getGlobalBounds()) || cellRect.intersects(t_rect3.getGlobalBounds()))
         {//need to change to a vector of objects/shapes for when obstacles are fully added
             cells[i].setMarked(true);
-            std::cout << "\ncell marked";
+
         }
         else
         {

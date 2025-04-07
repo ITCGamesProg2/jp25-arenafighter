@@ -54,6 +54,9 @@
     <ClInclude Include="LevelData.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png" />

@@ -51,9 +51,21 @@ void Orc::update(double dt)
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
 	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
 
+	if (m_orc.getPosition().x > nextCoordinates.x)
+	{
+		m_orcDirection = Direction::LEFT;
+		m_orc.setScale(-3, 3);
+	}
+	else
+	{
+		m_orcDirection = Direction::RIGHT;
+		m_orc.setScale(3, 3);
+	}
+
+
 	if (distance < 10)//orc has reached next cell
 	{
-		std::cout << "\nreached cell";
+
 		if (movePath.size() == 1)
 		{
 			m_orcState = OrcState::IDLE; //orc is has reached destination

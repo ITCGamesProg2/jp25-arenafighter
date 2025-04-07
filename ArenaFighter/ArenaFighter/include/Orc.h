@@ -11,6 +11,8 @@ enum class OrcState
 	ATTACKING	// 2
 };
 
+
+
 class Orc : public GameObject
 {
 public:
@@ -58,6 +60,7 @@ private:
 	float m_speed = 0.5;
 
 	std::vector<int> movePath;
+	Direction m_orcDirection;
 
 	OrcState m_orcState = OrcState::IDLE; //0: idle   1: moving
 

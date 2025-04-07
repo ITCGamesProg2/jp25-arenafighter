@@ -9,5 +9,12 @@ public:
     virtual sf::Vector2f getPosition() const = 0;
     virtual void update(double dt) = 0;
     virtual void render(sf::RenderWindow& t_window, bool t_debugMode) = 0;
+
+    enum class Direction
+    {
+        LEFT,		// 0
+        RIGHT		// 1
+    };
+
 };
 

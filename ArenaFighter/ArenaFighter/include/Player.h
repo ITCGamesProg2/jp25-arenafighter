@@ -10,11 +10,6 @@ enum class PlayerState
 	ATTACKING	// 2
 };
 
-enum class Direction
-{
-	LEFT,		// 0
-	RIGHT		// 1
-};
 
 class Player : public GameObject
 {
