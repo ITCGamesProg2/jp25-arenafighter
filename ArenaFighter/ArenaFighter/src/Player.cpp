@@ -76,6 +76,7 @@ void Player::update(double dt)
 	m_hitbox.setPosition(m_player.getPosition().x, m_player.getPosition().y - 5);
 	handleKeyInput();
 	animate(dt);
+	updateHealthBar();
 }
 
 void Player::render(sf::RenderWindow& window, bool t_debugMode)
@@ -84,6 +85,11 @@ void Player::render(sf::RenderWindow& window, bool t_debugMode)
 	if (t_debugMode)
 	{
 		window.draw(m_hitbox);
+	}
+	if (m_playerHealthSystem.getHealth() < 200)
+	{
+		window.draw(m_healthBarBack);
+		window.draw(m_healthBar);
 	}
 }
 
@@ -106,6 +112,16 @@ void Player::initSprites()
 	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
 	m_hitbox.setOutlineColor(sf::Color::Green);
 	m_hitbox.setOutlineThickness(1);
+
+	m_healthBar.setSize({ 50, 15 });
+	m_healthBar.setOrigin(m_healthBar.getSize().x / 2, m_healthBar.getSize().y / 2);
+	m_healthBar.setFillColor(sf::Color::Green);
+	m_healthBar.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
+
+	m_healthBarBack.setFillColor(sf::Color::Red);
+	m_healthBarBack.setSize({ 50, 15 });
+	m_healthBarBack.setOrigin(m_healthBarBack.getSize().x / 2, m_healthBarBack.getSize().y / 2);
+	m_healthBarBack.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
 }
 
 void Player::animate(double dt)
@@ -137,6 +153,15 @@ void Player::animate(double dt)
 		}
 		m_frameTimer = 0;
 	}
+}
+
+void Player::updateHealthBar()
+{
+	float healthPercentage = static_cast<float>(m_playerHealthSystem.getHealth() / m_playerHealthSystem.getMaxHealth());
+
+	m_healthBar.setSize(sf::Vector2f{50 * healthPercentage, 15});
+	m_healthBar.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
+	m_healthBarBack.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
 }
 
 void Player::keepPlayerInBounds()

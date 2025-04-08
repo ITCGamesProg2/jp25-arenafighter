@@ -46,7 +46,7 @@ private:
 	void initSprites();
 	void animate(double dt);
 
-	
+	void updateHealthBar();
 
 	sf::Sprite m_player;
 	
@@ -69,5 +69,6 @@ private:
 	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
 
-	
+	sf::RectangleShape m_healthBar;
+	sf::RectangleShape m_healthBarBack;
 };
