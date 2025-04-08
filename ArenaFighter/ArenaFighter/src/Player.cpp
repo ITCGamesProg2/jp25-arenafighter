@@ -136,12 +136,9 @@ void Player::initSprites()
 
 	m_player.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_player.setScale(3, 3);
-<<<<<<< HEAD
-	m_player.setPosition(100, 100);
 
-=======
 	m_player.setPosition(500, 500);
->>>>>>> obstaclesAndPickups
+
 	m_hitbox.setSize(sf::Vector2f(40, 50));
 	m_hitbox.setFillColor(sf::Color::Transparent);
 	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);

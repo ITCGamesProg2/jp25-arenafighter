@@ -43,11 +43,11 @@ private:
 	void resetObstacleColours();
 
 	void combatCollisions();
-<<<<<<< HEAD
+
 	void setupText();
-=======
+
 	void pickupCollisions();
->>>>>>> obstaclesAndPickups
+
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;

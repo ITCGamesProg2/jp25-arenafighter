@@ -24,15 +24,14 @@ int HealthSystem::getMaxHealth() const
 	return m_maxHealth;
 }
 
-<<<<<<< HEAD
 void HealthSystem::setHealth(int health) 
 {
 	m_currentHealth = health;
 }
 
-=======
+
 void HealthSystem::increaseHealth()
 {
 	m_currentHealth += 20;
 }
->>>>>>> obstaclesAndPickups
+

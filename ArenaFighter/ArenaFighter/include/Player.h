@@ -2,11 +2,9 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
-<<<<<<< HEAD
 #include <Thor/Vectors/VectorAlgebra2D.hpp>
-=======
 #include "HealthSystem.h"
->>>>>>> obstaclesAndPickups
+
 
 enum class PlayerState
 {

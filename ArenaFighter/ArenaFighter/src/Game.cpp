@@ -19,9 +19,8 @@ Game::Game() :
 {
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
-<<<<<<< HEAD
+
 	setupText();
-=======
 
 	std::vector<int> vector = m_searchGrid.breadthFirst(3, 3);//calls search function with start and destination
 
@@ -31,8 +30,6 @@ Game::Game() :
 	}
 
 	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
-
->>>>>>> obstaclesAndPickups
 }
 
 /// <summary>
@@ -308,7 +305,7 @@ void Game::combatCollisions()
 	}
 }
 
-<<<<<<< HEAD
+
 void Game::setupText()
 {
 	m_fontHolder.acquire("scoreFont", thor::Resources::fromFile<sf::Font>("ASSETS/FONTS/PixelPurl.ttf"));
@@ -317,7 +314,7 @@ void Game::setupText()
 	m_scoreText.setCharacterSize(34);
 	m_scoreText.setFillColor(sf::Color::White);
 }
-=======
+
 void Game::pickupCollisions()
 {
 	if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POTION)
@@ -332,4 +329,4 @@ void Game::pickupCollisions()
 	}
 	
 }
->>>>>>> obstaclesAndPickups
+

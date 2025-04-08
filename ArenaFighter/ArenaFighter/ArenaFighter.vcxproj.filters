@@ -1,68 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Cell.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HealthSystem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Orc.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\SpatialPartitionGrid.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Player.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpatialPartitionGrid.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelData.cpp">
-      <Filter>src</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pickups.cpp">
-      <Filter>src</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Orc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HealthSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cell.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game.h">
-      <Filter>include</Filter>
+    <ClInclude Include="include\HealthSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>include</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Orc.h">
-      <Filter>include</Filter>
+    <ClInclude Include="include\Game.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Cell.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\SpatialPartitionGrid.h">
-      <Filter>include</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\HealthSystem.h">
-      <Filter>include</Filter>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Orc.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LevelData.h">
-      <Filter>include</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-
     <ClInclude Include="include\GameObject.h">
-
-    <ClInclude Include="Pickups.h">
-
-      <Filter>include</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,11 +71,11 @@
     <Font Include="ASSETS\FONTS\ariblk.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{596c45e1-774c-42e2-9908-529144c623fa}</UniqueIdentifier>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2a9d4a24-cdc9-42ec-ab7f-68dc7f6ccc06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{64b04022-112e-4979-9c5d-3c6a4f72aa86}</UniqueIdentifier>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f546c2be-2113-482b-996d-92aa19997855}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
