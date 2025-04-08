@@ -22,7 +22,7 @@ public:
 	sf::FloatRect getHitbox() const;
 	sf::Vector2f returnHitboxPosition() const;
 
-	void positionHitbox();
+	
 
 	PickupType getType();
 private:

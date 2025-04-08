@@ -13,13 +13,17 @@ void Pickup::initPickups()
 {
 	
 	m_pickupSprite.setTexture(m_holder["tileMapPickup"]);
-
+	m_pickupSprite.setOrigin({ 16,16 });
+	m_pickupSprite.setScale(2.0f, 2.0f);
 
 	m_hitbox.setSize(sf::Vector2f{ 32, 32 });
-	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
+	m_hitbox.setOrigin({16,16});
 	m_hitbox.setFillColor(sf::Color::Transparent);
 	m_hitbox.setOutlineColor(sf::Color::Green);
 	m_hitbox.setOutlineThickness(1);
+
+
+	//m_pickupSprite.setOrigin(m_pickupSprite.getGlobalBounds().width / 2, m_pickupSprite.getGlobalBounds().height / 2);
 
 	// Roll a random number from 0-1 and set type based on this number
 	int randomNumber = rand() % 2;
@@ -33,24 +37,24 @@ void Pickup::initPickups()
 	}
 	
 
-
 	// Based on pickup type, change texture
 	if (m_pickupType == PickupType::POTION)
 	{
 		//144x 128y
 		m_pickupSprite.setTextureRect(sf::IntRect{ 144, 128, 16, 16 });
-		m_pickupSprite.setOrigin(m_pickupSprite.getGlobalBounds().width / 2, m_pickupSprite.getGlobalBounds().height / 2);
-		m_pickupSprite.setScale(3.0f, 3.0f);
-		m_pickupSprite.setPosition(sf::Vector2f{static_cast<float>(rand() % 1200) + 100, static_cast<float>(rand() % 600) + 100});
 	}
 	if (m_pickupType == PickupType::POISON)
 	{
 		m_pickupSprite.setTextureRect(sf::IntRect{ 112, 128, 16, 16 });
-		m_pickupSprite.setOrigin(m_pickupSprite.getGlobalBounds().width / 2, m_pickupSprite.getGlobalBounds().height / 2);
-		m_pickupSprite.setScale(3.0f, 3.0f);
-		m_pickupSprite.setPosition(sf::Vector2f{ static_cast<float>(rand() % 1200) + 100, static_cast<float>(rand() % 600) + 100 });
+
 	}
-	m_hitbox.setPosition(m_pickupSprite.getPosition());
+	
+	sf::Vector2f newPosition = { static_cast<float>(rand() % 1200) + 100, static_cast<float>(rand() % 600) + 100 };
+	m_pickupSprite.setPosition(newPosition);
+	m_hitbox.setPosition(m_pickupSprite.getPosition().x - 15, m_pickupSprite.getPosition().y - 15);
+	
+	
+	
 }
 
 void Pickup::renderickups(sf::RenderWindow& t_window, bool t_debugMode)
@@ -73,10 +77,7 @@ sf::Vector2f Pickup::returnHitboxPosition() const
 	return m_hitbox.getPosition();
 }
 
-void Pickup::positionHitbox()
-{
-	m_hitbox.setPosition(m_pickupSprite.getOrigin());
-}
+
 
 PickupType Pickup::getType()
 {
