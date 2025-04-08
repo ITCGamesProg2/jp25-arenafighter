@@ -62,7 +62,12 @@ void Game::run()
 			update(timePerFrame); //60 fps
 			m_player.update(static_cast<double>(timePerFrame.asSeconds()));
 			m_orc.update(static_cast<double>(timePerFrame.asSeconds()));
-			m_score = m_orc.getDeaths();
+			if (m_score < m_orc.getDeaths())
+			{ //calls breadth first search again as orc has respawned elsewhere
+				m_score = m_orc.getDeaths();
+				m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);//mark grid with objects
+				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
+			}
 			m_scoreText.setString("Score: " + std::to_string(m_score));
 #ifdef _DEBUG
 			render(); // want to debug drawing while stepping through code

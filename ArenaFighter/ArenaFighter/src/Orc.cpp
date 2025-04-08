@@ -23,16 +23,18 @@ void Orc::setMovePath(std::vector<int> cellPath)
 	movePath = cellPath;//sets to new path
 	nextCell = movePath.back();//sets the next cell for orc to go to
 	movePath.pop_back();//removes orc current cell location
-	if (!movePath.empty())
+	if (m_orcState != OrcState::DIE)
 	{
-		nextCell = movePath.back();//sets the next cell for orc to go to
-		m_orcState = OrcState::WALKING; //orc needs to walk to destination
+		if (!movePath.empty())
+		{
+			nextCell = movePath.back();//sets the next cell for orc to go to
+			m_orcState = OrcState::WALKING; //orc needs to walk to destination
+		}
+		else
+		{
+			m_orcState = OrcState::ATTACKING; //orc is in same area as destination
+		}
 	}
-	else
-	{
-		m_orcState = OrcState::ATTACKING; //orc is in same area as destination
-	}
-
 }
 
 void Orc::update(double dt)
@@ -50,38 +52,40 @@ void Orc::update(double dt)
 	float distanceX = m_orc.getPosition().x - nextCoordinates.x;
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
 	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
-
-	if ((m_orc.getPosition().x > nextCoordinates.x) && m_orcState == OrcState::WALKING)
+	if (m_orcState != OrcState::DIE)
 	{
-		m_orcDirection = Direction::LEFT;
-		m_orc.setScale(-3, 3);
-	}
-	else if (m_orcState == OrcState::WALKING)
-	{
-		m_orcDirection = Direction::RIGHT;
-		m_orc.setScale(3, 3);
-	}
-	if (m_orcState != OrcState::ATTACKING)//if attacking dont move
-		m_orc.move(m_moveNormal);
-
-	if (distance < 10)//orc has reached next cell
-	{
-
-		if (movePath.size() == 1)
+		if ((m_orc.getPosition().x > nextCoordinates.x) && m_orcState == OrcState::WALKING)
 		{
-			m_orcState = OrcState::ATTACKING; //orc is has reached destination
+			m_orcDirection = Direction::LEFT;
+			m_orc.setScale(-3, 3);
 		}
-		if (movePath.size() >= 2)
+		else if (m_orcState == OrcState::WALKING)
 		{
-			movePath.pop_back();//remove cell from vector
-			nextCell = movePath.back();//set next cell to go to
+			m_orcDirection = Direction::RIGHT;
+			m_orc.setScale(3, 3);
 		}
+		if (m_orcState != OrcState::ATTACKING)//if attacking dont move
+			m_orc.move(m_moveNormal);
 
-	}
-	if (m_orcHealthSystem.getHealth() <= 0)
-	{
-		respawn();
-		m_deaths++;
+		if (distance < 10)//orc has reached next cell
+		{
+
+			if (movePath.size() == 1)
+			{
+				m_orcState = OrcState::ATTACKING; //orc is has reached destination
+			}
+			if (movePath.size() >= 2)
+			{
+				movePath.pop_back();//remove cell from vector
+				nextCell = movePath.back();//set next cell to go to
+			}
+
+		}
+		if (m_orcHealthSystem.getHealth() <= 0)
+		{
+			m_orcState = OrcState::DIE;
+			m_col = 0;
+		}
 	}
 
 }
@@ -115,6 +119,7 @@ void Orc::initSprites()
 	m_holder.acquire("OrcSpriteIdle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Idle.png"));
 	m_holder.acquire("OrcSpriteWalk", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Walk.png"));
 	m_holder.acquire("orcAttackOne", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Attack01.png"));
+	m_holder.acquire("orcDeath", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Death.png"));
 	m_orc.setTexture(m_holder["OrcSpriteIdle"]);
 
 	m_orc.setTextureRect(sf::IntRect(0, 0, m_frameSize, m_frameSize));
@@ -165,6 +170,13 @@ void Orc::animate(double dt)
 			m_orc.setTexture(m_holder["orcAttackOne"]);
 			m_orc.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
 		}
+		if (m_orcState == OrcState::DIE)
+		{
+			m_orc.setTexture(m_holder["orcDeath"]);
+			m_orc.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
+			if (m_col > 3)
+				respawn();
+		}
 		m_col++;
 		m_frameTimer = 0;
 	}
@@ -179,8 +191,10 @@ void Orc::gridToCoordinate()//gets center of grid for orc to move towards
 
 void Orc::respawn()
 {
+	m_deaths++;
 	m_orc.setPosition(700, 400);
 	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
+	m_orcState = OrcState::IDLE;
 }
 
 int Orc::getDeaths()

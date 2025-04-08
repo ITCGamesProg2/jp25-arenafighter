@@ -8,7 +8,8 @@ enum class OrcState
 {
 	IDLE,		// 0
 	WALKING,	// 1
-	ATTACKING	// 2
+	ATTACKING,	// 2
+	DIE
 };
 
 
