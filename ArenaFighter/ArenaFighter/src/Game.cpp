@@ -53,7 +53,7 @@ void Game::run()
 
 			if (m_player.updateGrid(m_searchGrid.coordinateToGrid(m_player.getPosition()))) //if player has moved to a new grid
 			{//give orc new move path VVVV
-				m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
+				m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);//mark grid with objects
 				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
 			}
 

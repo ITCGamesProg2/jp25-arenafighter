@@ -30,7 +30,7 @@ void Orc::setMovePath(std::vector<int> cellPath)
 	}
 	else
 	{
-		m_orcState = OrcState::IDLE; //orc is in same area as destination
+		m_orcState = OrcState::ATTACKING; //orc is in same area as destination
 	}
 
 }
@@ -45,7 +45,7 @@ void Orc::update(double dt)
 	m_moveNormal = nextCoordinates - m_orc.getPosition();
 	m_moveNormal = thor::unitVector (m_moveNormal);//gets move normal
 	m_moveNormal = m_moveNormal * m_speed;
-	m_orc.move(m_moveNormal);
+
 
 	float distanceX = m_orc.getPosition().x - nextCoordinates.x;
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
@@ -61,14 +61,15 @@ void Orc::update(double dt)
 		m_orcDirection = Direction::RIGHT;
 		m_orc.setScale(3, 3);
 	}
-
+	if (m_orcState != OrcState::ATTACKING)//if attacking dont move
+		m_orc.move(m_moveNormal);
 
 	if (distance < 10)//orc has reached next cell
 	{
 
 		if (movePath.size() == 1)
 		{
-			m_orcState = OrcState::IDLE; //orc is has reached destination
+			m_orcState = OrcState::ATTACKING; //orc is has reached destination
 		}
 		if (movePath.size() >= 2)
 		{
@@ -113,6 +114,7 @@ void Orc::initSprites()
 	std::cout << "Orc created";
 	m_holder.acquire("OrcSpriteIdle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Idle.png"));
 	m_holder.acquire("OrcSpriteWalk", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Walk.png"));
+	m_holder.acquire("orcAttackOne", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Orc/Orc/Orc-Attack01.png"));
 	m_orc.setTexture(m_holder["OrcSpriteIdle"]);
 
 	m_orc.setTextureRect(sf::IntRect(0, 0, m_frameSize, m_frameSize));
@@ -143,7 +145,7 @@ void Orc::animate(double dt)
 	m_frameTimer = m_frameTimer + dt;
 	if (m_frameTimer > m_timePerFrame)
 	{
-		if ((m_col >= m_walkFrames && m_orcState == OrcState::WALKING) || (m_col >= m_idleFrames && m_orcState == OrcState::IDLE))//resets column if exceeded frames of that row
+		if ((m_col >= m_walkFrames && m_orcState == OrcState::WALKING) || (m_col >= m_idleFrames && m_orcState == OrcState::IDLE) || (m_col >= m_idleFrames && m_orcState == OrcState::ATTACKING))//resets column if exceeded frames of that row
 		{
 			m_col = 0;
 		}
@@ -157,6 +159,11 @@ void Orc::animate(double dt)
 			m_orc.setTexture(m_holder["OrcSpriteIdle"]);
 			m_orc.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
 
+		}
+		if (m_orcState == OrcState::ATTACKING)
+		{
+			m_orc.setTexture(m_holder["orcAttackOne"]);
+			m_orc.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
 		}
 		m_col++;
 		m_frameTimer = 0;
