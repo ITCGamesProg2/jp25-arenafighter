@@ -31,6 +31,9 @@
     <ClCompile Include="Cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HealthSystem.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="include\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\LevelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png" />
@@ -77,5 +83,13 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{f546c2be-2113-482b-996d-92aa19997855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="levelData">
+      <UniqueIdentifier>{0018fcaf-f4fd-4027-a059-08bd759333c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="levelData\level1.yaml">
+      <Filter>levelData</Filter>
+    </None>
   </ItemGroup>
 </Project>

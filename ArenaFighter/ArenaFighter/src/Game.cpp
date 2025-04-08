@@ -28,8 +28,20 @@ Game::Game() :
 	for (int i : vector) {
 		std::cout << i << " ";
 	}
-
-	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
+	int currentLevel = 1; // Will generate an exception if level loading fails. 
+	try
+	{
+		LevelLoader::load(currentLevel, m_levelData);
+	}
+	catch (std::exception& e)
+	{
+		std::cout << "Level Loading failure." << std::endl;
+		std::cout << e.what() << std::endl;
+		throw e;
+	}
+	m_holder.acquire("obstacle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/woodenBox.png"));
+	m_obstacleTexture = m_holder["obstacle"];
+	generateObstacles();
 }
 
 /// <summary>
@@ -189,6 +201,10 @@ void Game::render()
 	m_window.draw(m_obstacleTwo);
 	m_window.draw(m_obstacleThree);
 	m_window.draw(m_scoreText);
+	for (sf::Sprite sprite : m_obstacleSprites) //goes through wall sprites, drawing each one
+	{
+		m_window.draw(sprite);
+	}
 	if (m_debugMode)
 	{
 		if (m_collisonPresent)
@@ -330,3 +346,23 @@ void Game::pickupCollisions()
 	
 }
 
+
+void Game::generateObstacles() 
+{
+	std::cout << "generating";
+	// Replace the ? With the actual values for the wall image 
+	sf::IntRect wallRect(0, 0, 424, 408);
+	// Create the Walls 
+	for (auto const& obstacle : m_levelData.m_obstacles)
+	{
+		std::cout << "created obstacle";
+		sf::Sprite sprite;
+		sprite.setTexture(m_obstacleTexture);
+		sprite.setTextureRect(wallRect);
+		sprite.setOrigin(wallRect.width / 2.0, wallRect.height / 2.0);
+		sprite.setPosition(obstacle.m_position);
+		sprite.setRotation(obstacle.m_rotation);
+		sprite.setScale(0.1,0.1);
+		m_obstacleSprites.push_back(sprite);
+	}
+}

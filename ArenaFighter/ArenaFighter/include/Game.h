@@ -18,6 +18,7 @@
 #include "SpatialPartitionGrid.h"
 #include "LevelData.h"
 #include "Pickups.h"
+#include "LevelLoader.h"
 
 class Game
 {
@@ -47,7 +48,11 @@ private:
 	void setupText();
 
 	void pickupCollisions();
+	void generateObstacles();
 
+	LevelLoadData m_levelData;
+	std::vector<sf::Sprite> m_obstacleSprites;
+	sf::Texture m_obstacleTexture;
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;

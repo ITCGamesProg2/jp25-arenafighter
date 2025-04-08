@@ -38,6 +38,7 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\HealthSystem.h" />
+    <ClInclude Include="include\LevelLoader.h" />
     <ClInclude Include="include\Orc.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SpatialPartitionGrid.h" />
@@ -51,10 +52,14 @@
     <ClCompile Include="Pickups.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HealthSystem.cpp" />
+    <ClCompile Include="src\LevelLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Orc.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SpatialPartitionGrid.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="levelData\level1.yaml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -117,6 +122,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SFML_SDK)\lib;.\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libyaml-cppmdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
