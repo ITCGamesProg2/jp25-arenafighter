@@ -29,7 +29,6 @@ Game::Game() :
 
 	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
 
-
 }
 
 /// <summary>
@@ -153,10 +152,12 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
-
+	
+	m_pickup.positionHitbox();
 	m_player.keepPlayerInBounds();
 	testCollisions();
 	combatCollisions();
+	pickupCollisions();
 }
 
 /// <summary>
@@ -170,6 +171,8 @@ void Game::render()
 	m_level.renderLevel(m_window);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
 	m_pickup.renderickups(m_window, m_debugMode);
+	
+
 	m_player.render(m_window, m_debugMode);
 	
 	m_orc.render(m_window, m_debugMode);
@@ -256,6 +259,7 @@ void Game::testCollisions()
 			{
 				m_collisionLine[1] = m_pickup.returnHitboxPosition();
 			}
+			
 		}
 		
 	}
@@ -289,4 +293,19 @@ void Game::combatCollisions()
 		}
 		
 	}
+}
+
+void Game::pickupCollisions()
+{
+	if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POTION)
+	{
+		m_player.m_playerHealthSystem.increaseHealth();
+		m_pickup.initPickups();
+	}
+	else if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POISON)
+	{
+		m_player.m_playerHealthSystem.takeDamage(20);
+		m_pickup.initPickups();
+	}
+	
 }

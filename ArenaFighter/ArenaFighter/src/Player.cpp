@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <iostream>
 Player::Player(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
-	: m_holder(t_holder), m_playerState(PlayerState::IDLE), m_playerDirection(Direction::RIGHT)
+	: m_holder(t_holder), m_playerState(PlayerState::IDLE), m_playerDirection(Direction::RIGHT), m_playerHealthSystem(200)
 {
 	initSprites();
 }

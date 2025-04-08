@@ -23,3 +23,8 @@ int HealthSystem::getMaxHealth() const
 {
 	return m_maxHealth;
 }
+
+void HealthSystem::increaseHealth()
+{
+	m_currentHealth += 20;
+}

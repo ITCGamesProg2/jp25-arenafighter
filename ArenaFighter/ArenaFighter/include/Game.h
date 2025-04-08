@@ -43,7 +43,7 @@ private:
 	void resetObstacleColours();
 
 	void combatCollisions();
-
+	void pickupCollisions();
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	Player m_player;
@@ -76,6 +76,7 @@ private:
 	LevelData m_level;
 
 	Pickup m_pickup;
+	
 };
 
 #endif // !GAME_HPP

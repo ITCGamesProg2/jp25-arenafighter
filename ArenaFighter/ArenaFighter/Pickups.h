@@ -7,7 +7,7 @@
 enum class PickupType
 {
 	POTION,
-	POSION
+	POISON
 };
 
 class Pickup
@@ -21,6 +21,10 @@ public:
 
 	sf::FloatRect getHitbox() const;
 	sf::Vector2f returnHitboxPosition() const;
+
+	void positionHitbox();
+
+	PickupType getType();
 private:
 
 	sf::Sprite m_pickupSprite;

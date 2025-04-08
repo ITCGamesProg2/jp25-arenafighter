@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
+#include "HealthSystem.h"
 
 enum class PlayerState
 {
@@ -39,6 +40,8 @@ public:
 	bool updateGrid(int);
 
 	void keepPlayerInBounds();
+
+	HealthSystem m_playerHealthSystem;
 private:
 	void initSprites();
 	void animate(double dt);
@@ -65,4 +68,6 @@ private:
 	PlayerState m_playerState;
 	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
+
+	
 };
