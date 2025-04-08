@@ -17,9 +17,9 @@ void Cell::setNeighbours()
 {
     int row = m_cellID / m_gridRows;
     int col = m_cellID % m_gridCols;
-    int rowOffset[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
-    int colOffset[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-    for (int i = 0; i < 8; i++)
+    int rowOffset[] = { -1, 0, 1, 0 };
+    int colOffset[] = {  0, 1, 0, -1 };
+    for (int i = 0; i < 4; i++)
     {
 
         int newRow = row + rowOffset[i];

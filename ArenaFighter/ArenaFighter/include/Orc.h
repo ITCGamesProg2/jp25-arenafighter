@@ -48,7 +48,6 @@ private:
 
 	int nextCell;
 	sf::Vector2f nextCoordinates;
-	
 
 	int m_frameSize = 100;
 	double m_frameTimer = 0.0;

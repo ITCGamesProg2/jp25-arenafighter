@@ -27,12 +27,12 @@ void Orc::setMovePath(std::vector<int> cellPath)
 	{
 		nextCell = movePath.back();//sets the next cell for orc to go to
 		m_orcState = OrcState::WALKING; //orc needs to walk to destination
-
 	}
 	else
 	{
 		m_orcState = OrcState::IDLE; //orc is in same area as destination
 	}
+
 }
 
 void Orc::update(double dt)
