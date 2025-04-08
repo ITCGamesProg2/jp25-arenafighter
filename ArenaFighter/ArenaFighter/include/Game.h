@@ -17,6 +17,7 @@
 #include "Cell.h"
 #include "SpatialPartitionGrid.h"
 #include "LevelData.h"
+#include "Pickups.h"
 
 class Game
 {
@@ -42,7 +43,11 @@ private:
 	void resetObstacleColours();
 
 	void combatCollisions();
+<<<<<<< HEAD
 	void setupText();
+=======
+	void pickupCollisions();
+>>>>>>> obstaclesAndPickups
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;
@@ -77,6 +82,9 @@ private:
 	sf::Sprite m_backgroundSprite;
 
 	LevelData m_level;
+
+	Pickup m_pickup;
+	
 };
 
 #endif // !GAME_HPP

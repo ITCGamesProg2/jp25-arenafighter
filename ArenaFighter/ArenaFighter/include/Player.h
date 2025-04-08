@@ -2,7 +2,11 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
+<<<<<<< HEAD
 #include <Thor/Vectors/VectorAlgebra2D.hpp>
+=======
+#include "HealthSystem.h"
+>>>>>>> obstaclesAndPickups
 
 enum class PlayerState
 {
@@ -33,9 +37,16 @@ public:
 	/// <returns>True is player is attacking otherwise false</returns>
 	bool isAttacking();
 	bool updateGrid(int);
+
+	void keepPlayerInBounds();
+
+	HealthSystem m_playerHealthSystem;
 private:
 	void initSprites();
 	void animate(double dt);
+
+	void updateHealthBar();
+
 	sf::Sprite m_player;
 	
 	double m_speed{ 2.0 };
@@ -56,4 +67,7 @@ private:
 	PlayerState m_playerState;
 	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
+
+	sf::RectangleShape m_healthBar;
+	sf::RectangleShape m_healthBarBack;
 };

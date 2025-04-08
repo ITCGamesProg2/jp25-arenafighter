@@ -19,7 +19,12 @@ public:
 
 	int getMaxHealth() const;
 
+<<<<<<< HEAD
 	void setHealth(int);
+=======
+	void increaseHealth();
+
+>>>>>>> obstaclesAndPickups
 
 private:
 

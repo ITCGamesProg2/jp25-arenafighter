@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <iostream>
 Player::Player(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
-	: m_holder(t_holder), m_playerState(PlayerState::IDLE), m_playerDirection(Direction::RIGHT)
+	: m_holder(t_holder), m_playerState(PlayerState::IDLE), m_playerDirection(Direction::RIGHT), m_playerHealthSystem(200)
 {
 	initSprites();
 }
@@ -106,6 +106,7 @@ void Player::update(double dt)
 	m_hitbox.setPosition(m_player.getPosition().x, m_player.getPosition().y - 5);
 	handleKeyInput();
 	animate(dt);
+	updateHealthBar();
 }
 
 void Player::render(sf::RenderWindow& window, bool t_debugMode)
@@ -114,6 +115,11 @@ void Player::render(sf::RenderWindow& window, bool t_debugMode)
 	if (t_debugMode)
 	{
 		window.draw(m_hitbox);
+	}
+	if (m_playerHealthSystem.getHealth() < 200)
+	{
+		window.draw(m_healthBarBack);
+		window.draw(m_healthBar);
 	}
 }
 
@@ -130,13 +136,27 @@ void Player::initSprites()
 
 	m_player.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_player.setScale(3, 3);
+<<<<<<< HEAD
 	m_player.setPosition(100, 100);
 
+=======
+	m_player.setPosition(500, 500);
+>>>>>>> obstaclesAndPickups
 	m_hitbox.setSize(sf::Vector2f(40, 50));
 	m_hitbox.setFillColor(sf::Color::Transparent);
 	m_hitbox.setOrigin(m_hitbox.getGlobalBounds().width / 2, m_hitbox.getGlobalBounds().height / 2);
 	m_hitbox.setOutlineColor(sf::Color::Green);
 	m_hitbox.setOutlineThickness(1);
+
+	m_healthBar.setSize({ 50, 15 });
+	m_healthBar.setOrigin(m_healthBar.getSize().x / 2, m_healthBar.getSize().y / 2);
+	m_healthBar.setFillColor(sf::Color::Green);
+	m_healthBar.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
+
+	m_healthBarBack.setFillColor(sf::Color::Red);
+	m_healthBarBack.setSize({ 50, 15 });
+	m_healthBarBack.setOrigin(m_healthBarBack.getSize().x / 2, m_healthBarBack.getSize().y / 2);
+	m_healthBarBack.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
 }
 
 void Player::animate(double dt)
@@ -167,6 +187,41 @@ void Player::animate(double dt)
 			m_col = 0;
 		}
 		m_frameTimer = 0;
+	}
+}
+
+void Player::updateHealthBar()
+{
+	float healthPercentage = static_cast<float>(m_playerHealthSystem.getHealth() / m_playerHealthSystem.getMaxHealth());
+
+	m_healthBar.setSize(sf::Vector2f{50 * healthPercentage, 15});
+	m_healthBar.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
+	m_healthBarBack.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
+}
+
+void Player::keepPlayerInBounds()
+{
+	sf::Vector2f playerPosition = m_player.getPosition();
+
+	if (m_player.getPosition().x >= 1360)
+	{
+		playerPosition.x -= 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().x <= 50)
+	{
+		playerPosition.x += 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().y >= 750)
+	{
+		playerPosition.y -= 5;
+		m_player.setPosition(playerPosition);
+	}
+	if (m_player.getPosition().y <= 50)
+	{
+		playerPosition.y += 5;
+		m_player.setPosition(playerPosition);
 	}
 }
 

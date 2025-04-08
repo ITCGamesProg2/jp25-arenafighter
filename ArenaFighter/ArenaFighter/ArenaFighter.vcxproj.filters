@@ -28,6 +28,9 @@
     <ClCompile Include="LevelData.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Pickups.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h">
@@ -54,7 +57,11 @@
     <ClInclude Include="LevelData.h">
       <Filter>include</Filter>
     </ClInclude>
+
     <ClInclude Include="include\GameObject.h">
+
+    <ClInclude Include="Pickups.h">
+
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

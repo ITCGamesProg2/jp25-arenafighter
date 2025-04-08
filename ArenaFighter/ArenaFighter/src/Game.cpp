@@ -15,11 +15,24 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1408U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10), m_level(m_holder)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10), m_level(m_holder), m_pickup(m_holder)
 {
 	setupTest(); // load texture
 	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
+<<<<<<< HEAD
 	setupText();
+=======
+
+	std::vector<int> vector = m_searchGrid.breadthFirst(3, 3);//calls search function with start and destination
+
+	std::cout << "\n\n breath search: "; //output result
+	for (int i : vector) {
+		std::cout << i << " ";
+	}
+
+	std::cout<<"coordinateL "<< m_searchGrid.coordinateToGrid(sf::Vector2f(160, 10));
+
+>>>>>>> obstaclesAndPickups
 }
 
 /// <summary>
@@ -150,10 +163,13 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
-
+	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
 	
+
+	m_player.keepPlayerInBounds();
 	testCollisions();
 	combatCollisions();
+	pickupCollisions();
 }
 
 /// <summary>
@@ -166,6 +182,9 @@ void Game::render()
 	m_window.draw(m_backgroundSprite);
 	m_level.renderLevel(m_window);
 	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
+	m_pickup.renderickups(m_window, m_debugMode);
+	
+
 	m_player.render(m_window, m_debugMode);
 	
 	m_orc.render(m_window, m_debugMode);
@@ -249,6 +268,11 @@ void Game::testCollisions()
 			{
 				m_collisionLine[1] = m_orc.getPosition();
 			}
+			else if (object == m_pickup.getHitbox())
+			{
+				m_collisionLine[1] = m_pickup.returnHitboxPosition();
+			}
+			
 		}
 		
 	}
@@ -284,6 +308,7 @@ void Game::combatCollisions()
 	}
 }
 
+<<<<<<< HEAD
 void Game::setupText()
 {
 	m_fontHolder.acquire("scoreFont", thor::Resources::fromFile<sf::Font>("ASSETS/FONTS/PixelPurl.ttf"));
@@ -292,3 +317,19 @@ void Game::setupText()
 	m_scoreText.setCharacterSize(34);
 	m_scoreText.setFillColor(sf::Color::White);
 }
+=======
+void Game::pickupCollisions()
+{
+	if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POTION)
+	{
+		m_player.m_playerHealthSystem.increaseHealth();
+		m_pickup.initPickups();
+	}
+	else if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POISON)
+	{
+		m_player.m_playerHealthSystem.takeDamage(20);
+		m_pickup.initPickups();
+	}
+	
+}
+>>>>>>> obstaclesAndPickups
