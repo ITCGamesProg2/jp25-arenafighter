@@ -6,6 +6,19 @@ Orc::Orc(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
 	: m_holder(t_holder), m_orcHealthSystem(100)
 {
 	initSprites();
+
+	// Load in the shader
+	if (!m_orcOutline.loadFromFile("ASSETS/SHADERS/playerOutline.frag", sf::Shader::Fragment))
+	{
+		std::cout << "Error loading orc outline shader file!\n";
+	}
+	else
+	{
+		m_shaderLoaded = true;
+		m_orcOutline.setUniform("texture", sf::Shader::CurrentTexture);
+		m_orcOutline.setUniform("outlineColour", sf::Glsl::Vec4(0.7f, 0.0f, 0.0f, 1.0f));
+		m_orcOutline.setUniform("outlineThickness", 0.5f);
+	}
 }
 
 sf::FloatRect Orc::getBounds() const
@@ -96,7 +109,13 @@ void Orc::update(double dt)
 
 void Orc::render(sf::RenderWindow& window,bool debugMode)
 {
-	window.draw(m_orc);
+	sf::RenderStates states;
+	if (m_shaderLoaded)
+	{
+		states.shader = &m_orcOutline;
+	}
+
+	window.draw(m_orc, states);
 	if (debugMode)
 	{
 		window.draw(m_hitbox);

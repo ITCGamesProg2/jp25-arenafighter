@@ -78,5 +78,8 @@ private:
 	sf::RectangleShape m_healthBarBack;
 
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
+
+	sf::Shader m_orcOutline;
+	bool m_shaderLoaded;
 	
 };
