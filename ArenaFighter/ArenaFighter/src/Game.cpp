@@ -362,7 +362,7 @@ void Game::generateObstacles()
 		sprite.setOrigin(wallRect.width / 2.0, wallRect.height / 2.0);
 		sprite.setPosition(obstacle.m_position);
 		sprite.setRotation(obstacle.m_rotation);
-		sprite.setScale(0.1,0.1);
+		sprite.setScale(0.14,0.14);
 		m_obstacleSprites.push_back(sprite);
 	}
 }
