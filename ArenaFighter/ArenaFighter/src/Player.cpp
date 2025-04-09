@@ -14,7 +14,7 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
 	{
 		m_shaderLoaded = true;
 		m_playerOutline.setUniform("texture", sf::Shader::CurrentTexture);
-		m_playerOutline.setUniform("outlineColour", sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
+		m_playerOutline.setUniform("outlineColour", sf::Glsl::Vec4(0.5f, 0.0f, 0.5f, 1.0f));
 		m_playerOutline.setUniform("outlineThickness", 0.5f);
 	}
 }
