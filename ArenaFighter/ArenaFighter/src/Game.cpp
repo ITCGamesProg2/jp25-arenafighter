@@ -301,6 +301,8 @@ void Game::resetObstacleColours()
 
 void Game::combatCollisions()
 {
+	m_player.m_playerHealthSystem.takeDamage(m_orc.isAttackReady());//if orc attack is ready deal damage
+
 	std::vector<sf::FloatRect> nearbyObjectsPlayer = m_grid.getNearbyObjects(&m_player.getBounds());
 
 	for (auto& object : nearbyObjectsPlayer)

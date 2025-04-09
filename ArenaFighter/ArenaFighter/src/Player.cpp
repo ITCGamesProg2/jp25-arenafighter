@@ -189,7 +189,7 @@ void Player::animate(double dt)
 
 void Player::updateHealthBar()
 {
-	float healthPercentage = static_cast<float>(m_playerHealthSystem.getHealth() / m_playerHealthSystem.getMaxHealth());
+	float healthPercentage = static_cast<float>(m_playerHealthSystem.getHealth()) / m_playerHealthSystem.getMaxHealth();
 
 	m_healthBar.setSize(sf::Vector2f{50 * healthPercentage, 15});
 	m_healthBar.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));

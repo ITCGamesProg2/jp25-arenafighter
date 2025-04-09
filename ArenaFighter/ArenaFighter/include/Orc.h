@@ -36,7 +36,7 @@ public:
 	void setMovePath(std::vector<int>);
 
 	int getDeaths();
-
+	int isAttackReady();
 private:
 	void gridToCoordinate();
 	void initSprites();
@@ -49,6 +49,10 @@ private:
 
 	int nextCell;
 	sf::Vector2f nextCoordinates;
+
+	int m_damage = 10;
+	float m_damageTimer = 0.0f;
+	float m_damageInterval = 0.6f;
 
 	int m_frameSize = 100;
 	double m_frameTimer = 0.0;

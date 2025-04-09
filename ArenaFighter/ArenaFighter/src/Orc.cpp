@@ -48,6 +48,10 @@ void Orc::update(double dt)
 	m_moveNormal = thor::unitVector (m_moveNormal);//gets move normal
 	m_moveNormal = m_moveNormal * m_speed;
 
+	if (m_orcState == OrcState::ATTACKING)
+	{
+		m_damageTimer += dt;
+	}
 
 	float distanceX = m_orc.getPosition().x - nextCoordinates.x;
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
@@ -192,12 +196,27 @@ void Orc::gridToCoordinate()//gets center of grid for orc to move towards
 void Orc::respawn()
 {
 	m_deaths++;
-	m_orc.setPosition(700, 400);
+	m_orc.setPosition(800, 200);
 	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
 	m_orcState = OrcState::IDLE;
+	if (m_speed > 2)
+		m_damage = m_damage + 5;
+	else 
+		m_speed = m_speed + 0.2;
+	std::cout << "\n\nrespawn stats: \n VVVVVVVVVV \nspeed: " << m_speed << "\ndamage: " << m_damage;
 }
 
 int Orc::getDeaths()
 {
 	return m_deaths;
+}
+
+int Orc::isAttackReady()
+{
+	if (m_orcState == OrcState::ATTACKING && m_damageTimer>m_damageInterval)
+	{
+		m_damageTimer = 0;
+		return m_damage;//returns ammount of damage to be done
+	}
+	return 0;
 }
