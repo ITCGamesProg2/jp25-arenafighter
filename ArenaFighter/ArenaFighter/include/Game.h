@@ -41,7 +41,7 @@ private:
 	// This is purely for testing, will remove once I'm happy with how the grid and collisions work
 	void setupTest();
 	void testCollisions();
-	void resetObstacleColours();
+	
 
 	void combatCollisions();
 
@@ -70,10 +70,7 @@ private:
 	bool m_exitGame; // control exiting game
 	SpatialPartitionGrid m_grid{ 140, 80 };
 
-	sf::RectangleShape m_obstacleOne; // Place holders for collision testing
-	sf::RectangleShape m_obstacleTwo;
-	sf::RectangleShape m_obstacleThree;
-	sf::RectangleShape m_playerShape;
+	
 	float m_playerSpeed = 5.0f;
 
 	int m_score = 0;

@@ -167,9 +167,6 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	m_grid.clearGrid();
-	m_grid.insertGameObjectIntoGrid(&m_obstacleOne.getGlobalBounds());
-	m_grid.insertGameObjectIntoGrid(&m_obstacleTwo.getGlobalBounds());
-	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
@@ -197,9 +194,6 @@ void Game::render()
 	m_player.render(m_window, m_debugMode);
 	
 	m_orc.render(m_window, m_debugMode);
-	m_window.draw(m_obstacleOne);
-	m_window.draw(m_obstacleTwo);
-	m_window.draw(m_obstacleThree);
 	m_window.draw(m_scoreText);
 	for (sf::Sprite sprite : m_obstacleSprites) //goes through wall sprites, drawing each one
 	{
@@ -225,21 +219,7 @@ void Game::setupTest()
 {
 	m_collisionLine[0] = m_player.getOrigin();
 	m_collisionLine[1] = m_player.getOrigin();
-	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
-	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
-	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
-
-	m_obstacleOne.setPosition(250, 50);
-	m_obstacleTwo.setPosition(400, 400);
-	m_obstacleThree.setPosition(600, 600);
-
-	m_obstacleOne.setFillColor(sf::Color::Red);
-	m_obstacleTwo.setFillColor(sf::Color::Red);
-	m_obstacleThree.setFillColor(sf::Color::Red);
-
-	m_obstacleOne.setOrigin(m_obstacleOne.getGlobalBounds().width / 2, m_obstacleOne.getGlobalBounds().height / 2);
-	m_obstacleTwo.setOrigin(m_obstacleTwo.getGlobalBounds().width / 2, m_obstacleTwo.getGlobalBounds().height / 2);
-	m_obstacleThree.setOrigin(m_obstacleThree.getGlobalBounds().width / 2, m_obstacleThree.getGlobalBounds().height / 2);
+	
 
 	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/floorTiles.png"));
 	m_backgroundSprite.setTexture(m_holder["backImage"]);
@@ -254,7 +234,6 @@ void Game::testCollisions()
 	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_player.getBounds());
 
 	m_collisionLine[0] = m_player.getPosition();
-	resetObstacleColours();
 	m_collisonPresent = false;
 	for (auto &object : nearbyObjects)
 	{
@@ -262,22 +241,7 @@ void Game::testCollisions()
 		{
 			m_collisonPresent = true;
 			// Check which obstacle is being collided with and change its color
-			if (object == m_obstacleOne.getGlobalBounds())
-			{
-				m_obstacleOne.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleOne.getPosition();
-			}
-			else if (object == m_obstacleTwo.getGlobalBounds())
-			{
-				m_obstacleTwo.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleTwo.getPosition();
-			}
-			else if (object == m_obstacleThree.getGlobalBounds())
-			{
-				m_obstacleThree.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleThree.getPosition();
-			}
-			else if (object == m_orc.getBounds())
+			if (object == m_orc.getBounds())
 			{
 				m_collisionLine[1] = m_orc.getPosition();
 			}
@@ -292,12 +256,7 @@ void Game::testCollisions()
 	
 }
 
-void Game::resetObstacleColours()
-{
-	m_obstacleOne.setFillColor(sf::Color::Red);
-	m_obstacleTwo.setFillColor(sf::Color::Red);
-	m_obstacleThree.setFillColor(sf::Color::Red);
-}
+
 
 void Game::combatCollisions()
 {
