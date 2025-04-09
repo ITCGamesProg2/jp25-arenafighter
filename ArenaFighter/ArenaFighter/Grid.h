@@ -5,26 +5,19 @@
 class Grid
 {
 public:
-	Grid(int t_gridSize,int t_gridRows,int t_gridCols);
+	Grid(int t_gridSize,int t_gridRows,int t_gridCols, std::vector<sf::Sprite>& t_obstacleSprites);
 
-	void markGrids(sf::RectangleShape& t_rect1, sf::RectangleShape& t_rect2, sf::RectangleShape& t_rect3);
+	void markGrids();
 
 	std::vector<int> breadthFirst(int t_startCellId, int t_destCellId);
 
-
+	std::vector<sf::Sprite>& m_obstacleSprites;
 	int coordinateToGrid(sf::Vector2f);
 private:
 	void initGrid();
 	int m_gridSize;
 	int m_gridRows;
 	int m_gridCols;
-
-
-	sf::RectangleShape m_rect1;
-	sf::RectangleShape m_rect2;
-	sf::RectangleShape m_rect3;
-
-
 
 	int m_cellWidth = 140;
 	int m_cellHeight = 80;

@@ -15,10 +15,10 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ 1408U, 800U, 32U }, "SFML Game" }
-	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10), m_level(m_holder), m_pickup(m_holder)
+	, m_player(m_holder), m_exitGame{false}, m_collisionLine{sf::Lines, 2}, m_orc(m_holder), m_searchGrid(100,10,10,m_obstacleSprites), m_level(m_holder), m_pickup(m_holder)
 {
 	setupTest(); // load texture
-	m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);
+	m_searchGrid.markGrids();
 
 	setupText();
 
@@ -75,7 +75,7 @@ void Game::run()
 
 			if (m_player.updateGrid(m_searchGrid.coordinateToGrid(m_player.getPosition()))) //if player has moved to a new grid
 			{//give orc new move path VVVV
-				m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);//mark grid with objects
+				m_searchGrid.markGrids();//mark grid with objects
 				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
 			}
 
@@ -87,7 +87,7 @@ void Game::run()
 			if (m_score < m_orc.getDeaths())
 			{ //calls breadth first search again as orc has respawned elsewhere
 				m_score = m_orc.getDeaths();
-				m_searchGrid.markGrids(m_obstacleOne, m_obstacleTwo, m_obstacleThree);//mark grid with objects
+				m_searchGrid.markGrids();//mark grid with objects
 				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
 			}
 			m_scoreText.setString("Score: " + std::to_string(m_score));

@@ -1,7 +1,7 @@
 #include "Grid.h"
 #include <iostream>
-Grid::Grid(int t_gridSize,int t_gridRows,int t_gridCols)
-    : m_gridSize(t_gridSize),m_gridCols(t_gridCols),m_gridRows(t_gridRows)
+Grid::Grid(int t_gridSize,int t_gridRows,int t_gridCols, std::vector<sf::Sprite>& t_obstacleSprites)
+    : m_gridSize(t_gridSize),m_gridCols(t_gridCols),m_gridRows(t_gridRows),m_obstacleSprites(t_obstacleSprites)
 {
 	initGrid();
 }
@@ -16,22 +16,22 @@ void Grid::initGrid()
 
 }
 
-void Grid::markGrids(sf::RectangleShape& t_rect1, sf::RectangleShape& t_rect2, sf::RectangleShape& t_rect3)
+void Grid::markGrids()
 {
     for (int i = 0; i < m_gridSize; i++)
     {
+        cells[i].setMarked(false);
         sf::FloatRect cellRect((i % m_gridCols) * m_cellWidth, ((i / m_gridRows) * m_cellHeight), m_cellWidth, m_cellHeight);//calculates a rectangle to compare with object
-
-        if (cellRect.intersects(t_rect1.getGlobalBounds()) || cellRect.intersects(t_rect2.getGlobalBounds()) || cellRect.intersects(t_rect3.getGlobalBounds()))
-        {//need to change to a vector of objects/shapes for when obstacles are fully added
-            cells[i].setMarked(true);
-
-        }
-        else
+        for (sf::Sprite const& sprite : m_obstacleSprites)
         {
-            cells[i].setMarked(false);
+            if (cellRect.intersects(sprite.getGlobalBounds()))
+            {
+                cells[i].setMarked(true);
+            }
+
         }
     }
+
 }
 
 std::vector<int> Grid::breadthFirst(int t_startCellId, int t_destCellId)
