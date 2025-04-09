@@ -1,5 +1,5 @@
 /// <summary>
-/// author Conor Foley March 2025
+/// author Conor Foley, Jack Kane March 2025
 /// </summary>
 
 #include "Game.h"
@@ -42,6 +42,11 @@ Game::Game() :
 	m_holder.acquire("obstacle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/woodenBox.png"));
 	m_obstacleTexture = m_holder["obstacle"];
 	generateObstacles();
+
+	for (auto hitbox : m_obstacleHitboxes)
+	{
+		m_grid.insertGameObjectIntoGrid(&hitbox.getGlobalBounds());
+	}
 }
 
 /// <summary>
@@ -201,6 +206,10 @@ void Game::render()
 	}
 	if (m_debugMode)
 	{
+		for (auto hitbox : m_obstacleHitboxes)
+		{
+			m_window.draw(hitbox);
+		}
 		if (m_collisonPresent)
 		{
 			m_window.draw(m_collisionLine);
@@ -253,10 +262,56 @@ void Game::testCollisions()
 		}
 		
 	}
-	
+	for (auto& hitbox : m_obstacleHitboxes)
+	{
+		if (hitbox.getGlobalBounds().intersects(m_player.getBounds()))
+		{
+			m_collisonPresent = true;
+			m_collisionLine[1] = hitbox.getPosition();
+			playerCollisionWithObstacles(hitbox.getGlobalBounds());
+		}
+	}
 }
 
 
+
+void Game::playerCollisionWithObstacles(const sf::FloatRect& obstacleBounds)
+{
+	sf::FloatRect playerBounds = m_player.getBounds();
+	sf::Vector2f playerPos = m_player.getPosition();
+
+	// Calculate how far into the obstacle the player is
+	float overlapLeft = playerBounds.left + playerBounds.width - obstacleBounds.left;
+	float overlapRight = obstacleBounds.left + obstacleBounds.width - playerBounds.left;
+	float overlapTop = playerBounds.top + playerBounds.height - obstacleBounds.top;
+	float overlapBottom = obstacleBounds.top + obstacleBounds.height - playerBounds.top;
+
+	// Checks which overlap is the largest to determine which side the player is coming from 
+	bool fromLeft = (overlapLeft < overlapRight);
+	bool fromTop = (overlapTop < overlapBottom);
+	// Checks the above booleans and sets up how far the player needs to be pushed away to remove them from the obstacle
+	float minOverlapX = fromLeft ? overlapLeft : overlapRight; // If coming from left (ie. True), use overlapLeft, if false use overlapRight
+	float minOverlapY = fromTop ? overlapTop : overlapBottom; // If coming from top (ie. True), use overlapTop, if false use overlapBottom
+
+	// If horizontal overlap is smaller, resolve the collision along the X-axis (left/right)
+	// Else If the vertical overlap is smaller, resolve the collision along the Y-axis (up/down).
+	if (minOverlapX < minOverlapY)
+	{
+		if (fromLeft)
+			playerPos.x -= minOverlapX;
+		else
+			playerPos.x += minOverlapX;
+	}
+	else
+	{
+		if (fromTop)
+			playerPos.y -= minOverlapY;
+		else
+			playerPos.y += minOverlapY;
+	}
+
+	m_player.setPosition(playerPos);
+}
 
 void Game::combatCollisions()
 {
@@ -323,5 +378,16 @@ void Game::generateObstacles()
 		sprite.setRotation(obstacle.m_rotation);
 		sprite.setScale(0.14,0.14);
 		m_obstacleSprites.push_back(sprite);
+
+		// For the hitbox of each obstacle
+		sf::RectangleShape obstacleHitBox;
+		obstacleHitBox.setSize({ 60,60 });
+		obstacleHitBox.setFillColor(sf::Color::Transparent);
+		obstacleHitBox.setOutlineColor(sf::Color::Green);
+		obstacleHitBox.setOutlineThickness(1);
+		obstacleHitBox.setOrigin(30, 30);
+		obstacleHitBox.setPosition(obstacle.m_position);
+		obstacleHitBox.setRotation(obstacle.m_rotation);
+		m_obstacleHitboxes.push_back(obstacleHitBox);
 	}
 }

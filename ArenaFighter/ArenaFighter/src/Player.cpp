@@ -222,6 +222,11 @@ void Player::keepPlayerInBounds()
 	}
 }
 
+void Player::setPosition(sf::Vector2f t_position)
+{
+	m_player.setPosition(t_position);
+}
+
 bool Player::isAttacking()
 {
 	if (m_playerState == PlayerState::ATTACKING)

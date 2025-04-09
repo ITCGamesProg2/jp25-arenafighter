@@ -42,7 +42,7 @@ private:
 	void setupTest();
 	void testCollisions();
 	
-
+	void playerCollisionWithObstacles(const sf::FloatRect& obstacleBounds);
 	void combatCollisions();
 
 	void setupText();
@@ -53,6 +53,7 @@ private:
 	LevelLoadData m_levelData;
 	std::vector<sf::Sprite> m_obstacleSprites;
 	sf::Texture m_obstacleTexture;
+	std::vector<sf::RectangleShape> m_obstacleHitboxes;
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;
