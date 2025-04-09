@@ -4,6 +4,19 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
 	: m_holder(t_holder), m_playerState(PlayerState::IDLE), m_playerDirection(Direction::RIGHT), m_playerHealthSystem(200)
 {
 	initSprites();
+
+	// Load in the shader
+	if (!m_playerOutline.loadFromFile("ASSETS/SHADERS/playerOutline.frag", sf::Shader::Fragment))
+	{
+		std::cout << "Error loading player outline shader file!\n";
+	}
+	else
+	{
+		m_shaderLoaded = true;
+		m_playerOutline.setUniform("texture", sf::Shader::CurrentTexture);
+		m_playerOutline.setUniform("outlineColour", sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
+		m_playerOutline.setUniform("outlineThickness", 0.5f);
+	}
 }
 
 void Player::handleKeyInput()
@@ -111,7 +124,13 @@ void Player::update(double dt)
 
 void Player::render(sf::RenderWindow& window, bool t_debugMode)
 {
-	window.draw(m_player);
+	sf::RenderStates states;
+	if (m_shaderLoaded)
+	{
+		states.shader = &m_playerOutline;
+	}
+
+	window.draw(m_player, states);
 	if (t_debugMode)
 	{
 		window.draw(m_hitbox);

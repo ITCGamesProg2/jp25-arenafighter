@@ -68,4 +68,7 @@ private:
 
 	sf::RectangleShape m_healthBar;
 	sf::RectangleShape m_healthBarBack;
+
+	sf::Shader m_playerOutline;
+	bool m_shaderLoaded;
 };

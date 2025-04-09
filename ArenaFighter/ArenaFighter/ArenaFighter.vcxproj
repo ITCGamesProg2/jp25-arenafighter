@@ -59,6 +59,7 @@
     <ClCompile Include="src\SpatialPartitionGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ASSETS\SHADERS\playerOutline.frag" />
     <None Include="levelData\level1.yaml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

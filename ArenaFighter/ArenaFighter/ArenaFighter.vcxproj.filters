@@ -86,10 +86,16 @@
     <Filter Include="levelData">
       <UniqueIdentifier>{0018fcaf-f4fd-4027-a059-08bd759333c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{24800c84-7f49-475f-a7ac-f027961d561c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="levelData\level1.yaml">
       <Filter>levelData</Filter>
+    </None>
+    <None Include="ASSETS\SHADERS\playerOutline.frag">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
