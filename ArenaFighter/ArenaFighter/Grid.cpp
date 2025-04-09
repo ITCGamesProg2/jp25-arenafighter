@@ -11,7 +11,7 @@ void Grid::initGrid()
 {
     for (int i = 0; i < m_gridSize ; i++)
     {
-        cells.emplace_back(i,m_gridRows,m_gridCols);
+        cells.emplace_back(i,m_gridRows,m_gridCols);//fills grid with cells
     }
 
 }
@@ -24,7 +24,7 @@ void Grid::markGrids()
         sf::FloatRect cellRect((i % m_gridCols) * m_cellWidth, ((i / m_gridRows) * m_cellHeight), m_cellWidth, m_cellHeight);//calculates a rectangle to compare with object
         for (sf::Sprite const& sprite : m_obstacleSprites)
         {
-            if (cellRect.intersects(sprite.getGlobalBounds()))
+            if (cellRect.intersects(sprite.getGlobalBounds()))//marks cell (cell contains an obstacle and cannot be entered)
             {
                 cells[i].setMarked(true);
             }
@@ -91,7 +91,7 @@ std::vector<int> Grid::breadthFirst(int t_startCellId, int t_destCellId)
 
 }
 
-int Grid::coordinateToGrid(sf::Vector2f coordinate)
+int Grid::coordinateToGrid(sf::Vector2f coordinate) //converts a coordinate to a grid (coords 10,10 would be grid 0)
 {
     int col = (coordinate.x / m_cellWidth);
     int row = (coordinate.y / m_cellHeight);

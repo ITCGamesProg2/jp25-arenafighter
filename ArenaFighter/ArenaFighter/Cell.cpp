@@ -9,11 +9,10 @@ Cell::Cell(int t_cellID, int t_gridRows,int t_gridCols)
 
 void Cell::initCell()
 {
-	//std::cout << "\ncell created ID:" << m_cellID;
 	setNeighbours();
 }
 
-void Cell::setNeighbours()
+void Cell::setNeighbours()//sets neighbours of cells (above/below/left/right)
 {
     int row = m_cellID / m_gridRows;
     int col = m_cellID % m_gridCols;
@@ -31,7 +30,7 @@ void Cell::setNeighbours()
     }
 }
 
-std::vector<int>& Cell::getNeighbours()
+std::vector<int>& Cell::getNeighbours()//returns vector of neighbours
 {
     return m_neighbours;
 }

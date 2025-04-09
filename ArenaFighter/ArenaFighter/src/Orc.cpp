@@ -61,7 +61,7 @@ void Orc::update(double dt)
 	m_moveNormal = thor::unitVector (m_moveNormal);//gets move normal
 	m_moveNormal = m_moveNormal * m_speed;
 
-	if (m_orcState == OrcState::ATTACKING)
+	if (m_orcState == OrcState::ATTACKING)//if orc is attacking increase the damage timer so damage can be dealth when it reaches the interval
 	{
 		m_damageTimer += dt;
 	}
@@ -69,9 +69,10 @@ void Orc::update(double dt)
 	float distanceX = m_orc.getPosition().x - nextCoordinates.x;
 	float distanceY = m_orc.getPosition().y - nextCoordinates.y;
 	float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY)); //calculates distance so we can know when orc needs to change what cell its going towards
-	if (m_orcState != OrcState::DIE)
+
+	if (m_orcState != OrcState::DIE)//if orc is alive
 	{
-		if ((m_orc.getPosition().x > nextCoordinates.x) && m_orcState == OrcState::WALKING)
+		if ((m_orc.getPosition().x > nextCoordinates.x) && m_orcState == OrcState::WALKING)//sets directions
 		{
 			m_orcDirection = Direction::LEFT;
 			m_orc.setScale(-3, 3);
@@ -98,7 +99,7 @@ void Orc::update(double dt)
 			}
 
 		}
-		if (m_orcHealthSystem.getHealth() <= 0)
+		if (m_orcHealthSystem.getHealth() <= 0)//if health is 0, die
 		{
 			m_orcState = OrcState::DIE;
 			m_col = 0;
@@ -205,34 +206,36 @@ void Orc::animate(double dt)
 	}
 }
 
-void Orc::gridToCoordinate()//gets center of grid for orc to move towards
+void Orc::gridToCoordinate()//gets center of cell from its id for orc to move towards
 {
 	int row = nextCell / 10;
 	int col = nextCell % 10;
 	nextCoordinates = sf::Vector2f((col * 140) + 70, (row * 80) + 40);//the coordinates for orc to travel to (centre of cell)
 }
 
-void Orc::respawn()
+void Orc::respawn()//respawns orc
 {
 	m_deaths++;
 	m_orc.setPosition(800, 200);
 	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
 	m_orcState = OrcState::IDLE;
-	if (m_speed > 2)
+
+	if (m_speed > 2)//difficulty scaling
 		m_damage = m_damage + 5;
 	else 
 		m_speed = m_speed + 0.2;
+
 	std::cout << "\n\nrespawn stats: \n VVVVVVVVVV \nspeed: " << m_speed << "\ndamage: " << m_damage;
 }
 
-int Orc::getDeaths()
+int Orc::getDeaths()//returns number of times orc has died
 {
 	return m_deaths;
 }
 
 int Orc::isAttackReady()
 {
-	if (m_orcState == OrcState::ATTACKING && m_damageTimer>m_damageInterval)
+	if (m_orcState == OrcState::ATTACKING && m_damageTimer>m_damageInterval)//if ready to attack (attack wait timer has depleted)
 	{
 		m_damageTimer = 0;
 		return m_damage;//returns ammount of damage to be done
