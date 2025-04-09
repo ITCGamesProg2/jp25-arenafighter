@@ -37,7 +37,7 @@ public:
 	bool updateGrid(int);
 
 	void keepPlayerInBounds();
-
+	void setPosition(sf::Vector2f t_position);
 	HealthSystem m_playerHealthSystem;
 private:
 	void initSprites();

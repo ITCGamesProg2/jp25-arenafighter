@@ -41,8 +41,8 @@ private:
 	// This is purely for testing, will remove once I'm happy with how the grid and collisions work
 	void setupTest();
 	void testCollisions();
-	void resetObstacleColours();
-
+	
+	void playerCollisionWithObstacles(const sf::FloatRect& obstacleBounds);
 	void combatCollisions();
 
 	void setupText();
@@ -53,6 +53,7 @@ private:
 	LevelLoadData m_levelData;
 	std::vector<sf::Sprite> m_obstacleSprites;
 	sf::Texture m_obstacleTexture;
+	std::vector<sf::RectangleShape> m_obstacleHitboxes;
 
 	thor::ResourceHolder<sf::Texture, std::string> m_holder;
 	thor::ResourceHolder<sf::Font, std::string> m_fontHolder;
@@ -70,10 +71,7 @@ private:
 	bool m_exitGame; // control exiting game
 	SpatialPartitionGrid m_grid{ 140, 80 };
 
-	sf::RectangleShape m_obstacleOne; // Place holders for collision testing
-	sf::RectangleShape m_obstacleTwo;
-	sf::RectangleShape m_obstacleThree;
-	sf::RectangleShape m_playerShape;
+	
 	float m_playerSpeed = 5.0f;
 
 	int m_score = 0;

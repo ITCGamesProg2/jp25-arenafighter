@@ -1,5 +1,5 @@
 /// <summary>
-/// author Conor Foley March 2025
+/// author Conor Foley, Jack Kane March 2025
 /// </summary>
 
 #include "Game.h"
@@ -42,6 +42,11 @@ Game::Game() :
 	m_holder.acquire("obstacle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/woodenBox.png"));
 	m_obstacleTexture = m_holder["obstacle"];
 	generateObstacles();
+
+	for (auto hitbox : m_obstacleHitboxes)
+	{
+		m_grid.insertGameObjectIntoGrid(&hitbox.getGlobalBounds());
+	}
 }
 
 /// <summary>
@@ -167,9 +172,6 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	m_grid.clearGrid();
-	m_grid.insertGameObjectIntoGrid(&m_obstacleOne.getGlobalBounds());
-	m_grid.insertGameObjectIntoGrid(&m_obstacleTwo.getGlobalBounds());
-	m_grid.insertGameObjectIntoGrid(&m_obstacleThree.getGlobalBounds());
 	m_grid.insertGameObjectIntoGrid(&m_player.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
@@ -197,9 +199,6 @@ void Game::render()
 	m_player.render(m_window, m_debugMode);
 	
 	m_orc.render(m_window, m_debugMode);
-	m_window.draw(m_obstacleOne);
-	m_window.draw(m_obstacleTwo);
-	m_window.draw(m_obstacleThree);
 	m_window.draw(m_scoreText);
 	for (sf::Sprite sprite : m_obstacleSprites) //goes through wall sprites, drawing each one
 	{
@@ -207,6 +206,10 @@ void Game::render()
 	}
 	if (m_debugMode)
 	{
+		for (auto hitbox : m_obstacleHitboxes)
+		{
+			m_window.draw(hitbox);
+		}
 		if (m_collisonPresent)
 		{
 			m_window.draw(m_collisionLine);
@@ -225,21 +228,7 @@ void Game::setupTest()
 {
 	m_collisionLine[0] = m_player.getOrigin();
 	m_collisionLine[1] = m_player.getOrigin();
-	m_obstacleOne.setSize(sf::Vector2f(50.0f, 50.0f));
-	m_obstacleTwo.setSize(sf::Vector2f(50.0f, 50.0f));
-	m_obstacleThree.setSize(sf::Vector2f(50.0f, 50.0f));
-
-	m_obstacleOne.setPosition(250, 50);
-	m_obstacleTwo.setPosition(400, 400);
-	m_obstacleThree.setPosition(600, 600);
-
-	m_obstacleOne.setFillColor(sf::Color::Red);
-	m_obstacleTwo.setFillColor(sf::Color::Red);
-	m_obstacleThree.setFillColor(sf::Color::Red);
-
-	m_obstacleOne.setOrigin(m_obstacleOne.getGlobalBounds().width / 2, m_obstacleOne.getGlobalBounds().height / 2);
-	m_obstacleTwo.setOrigin(m_obstacleTwo.getGlobalBounds().width / 2, m_obstacleTwo.getGlobalBounds().height / 2);
-	m_obstacleThree.setOrigin(m_obstacleThree.getGlobalBounds().width / 2, m_obstacleThree.getGlobalBounds().height / 2);
+	
 
 	m_holder.acquire("backImage", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/floorTiles.png"));
 	m_backgroundSprite.setTexture(m_holder["backImage"]);
@@ -254,7 +243,6 @@ void Game::testCollisions()
 	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_player.getBounds());
 
 	m_collisionLine[0] = m_player.getPosition();
-	resetObstacleColours();
 	m_collisonPresent = false;
 	for (auto &object : nearbyObjects)
 	{
@@ -262,22 +250,7 @@ void Game::testCollisions()
 		{
 			m_collisonPresent = true;
 			// Check which obstacle is being collided with and change its color
-			if (object == m_obstacleOne.getGlobalBounds())
-			{
-				m_obstacleOne.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleOne.getPosition();
-			}
-			else if (object == m_obstacleTwo.getGlobalBounds())
-			{
-				m_obstacleTwo.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleTwo.getPosition();
-			}
-			else if (object == m_obstacleThree.getGlobalBounds())
-			{
-				m_obstacleThree.setFillColor(sf::Color::Magenta);
-				m_collisionLine[1] = m_obstacleThree.getPosition();
-			}
-			else if (object == m_orc.getBounds())
+			if (object == m_orc.getBounds())
 			{
 				m_collisionLine[1] = m_orc.getPosition();
 			}
@@ -289,14 +262,55 @@ void Game::testCollisions()
 		}
 		
 	}
-	
+	for (auto& hitbox : m_obstacleHitboxes)
+	{
+		if (hitbox.getGlobalBounds().intersects(m_player.getBounds()))
+		{
+			m_collisonPresent = true;
+			m_collisionLine[1] = hitbox.getPosition();
+			playerCollisionWithObstacles(hitbox.getGlobalBounds());
+		}
+	}
 }
 
-void Game::resetObstacleColours()
+
+
+void Game::playerCollisionWithObstacles(const sf::FloatRect& obstacleBounds)
 {
-	m_obstacleOne.setFillColor(sf::Color::Red);
-	m_obstacleTwo.setFillColor(sf::Color::Red);
-	m_obstacleThree.setFillColor(sf::Color::Red);
+	sf::FloatRect playerBounds = m_player.getBounds();
+	sf::Vector2f playerPos = m_player.getPosition();
+
+	// Calculate how far into the obstacle the player is
+	float overlapLeft = playerBounds.left + playerBounds.width - obstacleBounds.left;
+	float overlapRight = obstacleBounds.left + obstacleBounds.width - playerBounds.left;
+	float overlapTop = playerBounds.top + playerBounds.height - obstacleBounds.top;
+	float overlapBottom = obstacleBounds.top + obstacleBounds.height - playerBounds.top;
+
+	// Checks which overlap is the largest to determine which side the player is coming from 
+	bool fromLeft = (overlapLeft < overlapRight);
+	bool fromTop = (overlapTop < overlapBottom);
+	// Checks the above booleans and sets up how far the player needs to be pushed away to remove them from the obstacle
+	float minOverlapX = fromLeft ? overlapLeft : overlapRight; // If coming from left (ie. True), use overlapLeft, if false use overlapRight
+	float minOverlapY = fromTop ? overlapTop : overlapBottom; // If coming from top (ie. True), use overlapTop, if false use overlapBottom
+
+	// If horizontal overlap is smaller, resolve the collision along the X-axis (left/right)
+	// Else If the vertical overlap is smaller, resolve the collision along the Y-axis (up/down).
+	if (minOverlapX < minOverlapY)
+	{
+		if (fromLeft)
+			playerPos.x -= minOverlapX;
+		else
+			playerPos.x += minOverlapX;
+	}
+	else
+	{
+		if (fromTop)
+			playerPos.y -= minOverlapY;
+		else
+			playerPos.y += minOverlapY;
+	}
+
+	m_player.setPosition(playerPos);
 }
 
 void Game::combatCollisions()
@@ -366,5 +380,16 @@ void Game::generateObstacles()
 		sprite.setRotation(obstacle.m_rotation);
 		sprite.setScale(0.14,0.14);
 		m_obstacleSprites.push_back(sprite);
+
+		// For the hitbox of each obstacle
+		sf::RectangleShape obstacleHitBox;
+		obstacleHitBox.setSize({ 60,60 });
+		obstacleHitBox.setFillColor(sf::Color::Transparent);
+		obstacleHitBox.setOutlineColor(sf::Color::Green);
+		obstacleHitBox.setOutlineThickness(1);
+		obstacleHitBox.setOrigin(30, 30);
+		obstacleHitBox.setPosition(obstacle.m_position);
+		obstacleHitBox.setRotation(obstacle.m_rotation);
+		m_obstacleHitboxes.push_back(obstacleHitBox);
 	}
 }

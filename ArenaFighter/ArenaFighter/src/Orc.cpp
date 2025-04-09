@@ -130,7 +130,7 @@ void Orc::initSprites()
 
 	m_orc.setOrigin(m_frameSize / 2, m_frameSize / 2);
 	m_orc.setScale(3, 3);
-	m_orc.setPosition(300, 300);
+	m_orc.setPosition(1000, 200);
 
 	m_hitbox.setSize(sf::Vector2f(40, 50));
 	m_hitbox.setFillColor(sf::Color::Transparent);
@@ -196,7 +196,11 @@ void Orc::gridToCoordinate()//gets center of grid for orc to move towards
 void Orc::respawn()
 {
 	m_deaths++;
+<<<<<<< HEAD
 	m_orc.setPosition(800, 200);
+=======
+	m_orc.setPosition(1000, 200);
+>>>>>>> obstacleCollision
 	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
 	m_orcState = OrcState::IDLE;
 	if (m_speed > 2)
