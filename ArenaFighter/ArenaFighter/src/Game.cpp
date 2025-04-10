@@ -100,6 +100,7 @@ void Game::run()
 				m_orc.setMovePath(m_searchGrid.breadthFirst(m_searchGrid.coordinateToGrid(m_orc.getPosition()), m_searchGrid.coordinateToGrid(m_player.getPosition())));
 			}
 			m_scoreText.setString("Score: " + std::to_string(m_score));//score text
+			m_highScoreText.setString("HighScore: " + std::to_string(m_highScore));//score text
 #ifdef _DEBUG
 			render(); // want to debug drawing while stepping through code
 #endif // _DEBUG
@@ -148,6 +149,13 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_debugMode = !m_debugMode;
 	}
+	if (sf::Keyboard::R == t_event.key.code && m_gameOver)
+	{
+		m_gameOver = false;
+		restartGame();
+		m_score = 0;
+		std::cout << "restart";
+	}
 	
 	
 }
@@ -180,6 +188,18 @@ void Game::update(sf::Time t_deltaTime)
 	m_grid.insertGameObjectIntoGrid(&m_orc.getBounds());
 	m_grid.insertGameObjectIntoGrid(&m_pickup.getHitbox());
 	
+	if (m_player.isGameOver())
+	{
+		if (m_score > m_highScore)
+			m_highScore = m_score;
+		if (!m_gameOver)
+		{
+			m_gameOverText.setString("Game over\nPress R to play again!\nYour score was: " + std::to_string(m_score) + "\nYour highscore is: "+ std::to_string(m_highScore));
+		}
+		m_gameOver = true;
+	}
+	else 
+		m_gameOver = false;
 
 	m_player.keepPlayerInBounds();
 	testCollisions();
@@ -194,31 +214,40 @@ void Game::render()
 {
 
 	m_window.clear(sf::Color::Black);
-	m_window.draw(m_backgroundSprite);
-	m_level.renderLevel(m_window);
-	m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
-	m_pickup.renderickups(m_window, m_debugMode);
-	
+	if (!m_gameOver)
+	{
+		m_window.draw(m_backgroundSprite);
+		m_level.renderLevel(m_window);
+		m_grid.drawGrid(m_window, &m_player.getBounds(), m_debugMode);
+		m_pickup.renderickups(m_window, m_debugMode);
 
-	m_player.render(m_window, m_debugMode);
-	
-	m_orc.render(m_window, m_debugMode);
-	m_window.draw(m_scoreText);
-	for (sf::Sprite sprite : m_obstacleSprites) //goes through wall sprites, drawing each one
-	{
-		m_window.draw(sprite);
-	}
-	if (m_debugMode)
-	{
-		for (auto hitbox : m_obstacleHitboxes)
+		m_player.render(m_window, m_debugMode);
+
+		m_orc.render(m_window, m_debugMode);
+
+		for (sf::Sprite sprite : m_obstacleSprites) //goes through wall sprites, drawing each one
 		{
-			m_window.draw(hitbox);
+			m_window.draw(sprite);
 		}
-		if (m_collisonPresent)
+		if (m_debugMode)
 		{
-			m_window.draw(m_collisionLine);
+			for (auto hitbox : m_obstacleHitboxes)
+			{
+				m_window.draw(hitbox);
+			}
+			if (m_collisonPresent)
+			{
+				m_window.draw(m_collisionLine);
+			}
 		}
+		m_window.draw(m_scoreText);
+		m_window.draw(m_highScoreText);
 	}
+	else
+	{
+		m_window.draw(m_gameOverText);
+	}
+
 	m_window.display();
 	
 }
@@ -350,12 +379,30 @@ void Game::combatCollisions()
 void Game::setupText()
 {
 	m_fontHolder.acquire("scoreFont", thor::Resources::fromFile<sf::Font>("ASSETS/FONTS/PixelPurl.ttf"));
+
 	m_scoreText.setFont(m_fontHolder["scoreFont"]);
+	m_highScoreText.setFont(m_fontHolder["scoreFont"]);
+	m_gameOverText.setFont(m_fontHolder["scoreFont"]);
+
 	m_scoreText.setPosition(50, 30);
+	m_highScoreText.setPosition(50, 60);
+	m_gameOverText.setPosition(500, 200);
+
 	m_scoreText.setCharacterSize(34);
 	m_scoreText.setFillColor(sf::Color::White);
 
+
 	m_grid.initFontForDebug();
+
+	m_highScoreText.setCharacterSize(34);
+	m_highScoreText.setFillColor(sf::Color::White);
+
+	m_gameOverText.setCharacterSize(60);
+	m_gameOverText.setFillColor(sf::Color::White);
+
+	m_gameOverText.setString("Game over\nPress R to play again!");
+
+
 }
 
 void Game::pickupCollisions()
@@ -400,4 +447,11 @@ void Game::generateObstacles()
 		obstacleHitBox.setRotation(obstacle.m_rotation);
 		m_obstacleHitboxes.push_back(obstacleHitBox);
 	}
+}
+
+void Game::restartGame()
+{
+	m_player.respawn();
+	m_score = 0;
+	m_orc.reset();
 }

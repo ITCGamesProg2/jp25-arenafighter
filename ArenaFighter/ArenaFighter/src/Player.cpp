@@ -120,7 +120,14 @@ sf::Vector2f Player::getPosition() const
 void Player::update(double dt)
 {
 	m_hitbox.setPosition(m_player.getPosition().x, m_player.getPosition().y - 5);
-	handleKeyInput();
+	if (m_playerHealthSystem.getHealth() <= 0)
+	{
+		m_playerState = PlayerState::DEAD;
+	}
+	if (m_playerState != PlayerState::DEAD)
+	{
+		handleKeyInput();
+	}
 	animate(dt);
 	updateHealthBar();
 }
@@ -150,6 +157,7 @@ void Player::initSprites()
 	m_holder.acquire("playerSpriteIdle", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Idle.png"));
 	m_holder.acquire("playerSpriteWalk", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Walk.png"));
 	m_holder.acquire("playerAttackOne", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Attack01.png"));
+	m_holder.acquire("playerDeath", thor::Resources::fromFile<sf::Texture>("ASSETS/IMAGES/Soldier/Soldier/Soldier-Death.png"));
 	m_player.setTexture(m_holder["playerSpriteIdle"]);
 
 
@@ -188,6 +196,13 @@ void Player::animate(double dt)
 		{
 			m_player.setTexture(m_holder["playerAttackOne"]);
 			m_player.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
+		}
+		if (m_playerState == PlayerState::DEAD)
+		{
+			m_player.setTexture(m_holder["playerDeath"]);
+			m_player.setTextureRect(sf::IntRect((m_col * 100), (m_idleRow * 100), m_frameSize, m_frameSize));
+			if (m_col > 3)
+				m_gameOver=true;
 		}
 		m_col++;
 		//if ((m_col >= m_idleFrames && m_playerState == PlayerState::IDLE) || (m_col >= m_walkFrames && m_playerState == PlayerState::WALKING ))//resets column if exceeded frames of that row
@@ -255,4 +270,19 @@ bool Player::updateGrid(int grid) //returns true if player has moved to a new gr
 		return true;
 	}
 	return false;
+}
+
+
+
+void Player::respawn()
+{
+	m_gameOver = false;
+	m_playerState = PlayerState::IDLE;
+	m_player.setPosition(100, 100);
+	m_playerHealthSystem.setHealth(m_playerHealthSystem.getMaxHealth());
+}
+
+bool Player::isGameOver()
+{
+	return m_gameOver;
 }

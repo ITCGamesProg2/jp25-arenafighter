@@ -44,7 +44,7 @@ private:
 	
 	void playerCollisionWithObstacles(const sf::FloatRect& obstacleBounds);
 	void combatCollisions();
-
+	void restartGame(); //restarts game if player chooses to restart
 	void setupText();
 
 	void pickupCollisions();
@@ -62,7 +62,10 @@ private:
 	Grid m_searchGrid; //grid for breadth first search
 
 	sf::Text m_scoreText;
+	sf::Text m_highScoreText;
+	sf::Text m_gameOverText;
 
+	bool m_gameOver = false;
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
@@ -75,6 +78,7 @@ private:
 	float m_playerSpeed = 5.0f;
 
 	int m_score = 0;
+	int m_highScore = 0;
 
 	bool m_collisonPresent = false;
 	

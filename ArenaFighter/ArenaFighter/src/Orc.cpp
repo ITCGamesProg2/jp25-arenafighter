@@ -221,7 +221,7 @@ void Orc::respawn()//respawns orc
 	m_orcState = OrcState::IDLE;
 
 	if (m_speed > 2)//difficulty scaling
-		m_damage = m_damage + 5;
+		m_damage = m_damage + 10;
 	else 
 		m_speed = m_speed + 0.2;
 
@@ -241,4 +241,13 @@ int Orc::isAttackReady()
 		return m_damage;//returns ammount of damage to be done
 	}
 	return 0;
+}
+void Orc::reset()
+{
+	m_deaths = 0;
+	m_speed = 0.5;
+	m_damage = 10;
+	m_orc.setPosition(800, 200);
+	m_orcHealthSystem.setHealth(m_orcHealthSystem.getMaxHealth());//sets orc back to max hp
+	m_orcState = OrcState::IDLE;
 }

@@ -11,7 +11,8 @@ enum class PlayerState
 {
 	IDLE,		// 0
 	WALKING,	// 1
-	ATTACKING	// 2
+	ATTACKING,	// 2
+	DEAD        // 3
 };
 
 
@@ -40,6 +41,9 @@ public:
 	void keepPlayerInBounds();
 	void setPosition(sf::Vector2f t_position);
 	HealthSystem m_playerHealthSystem;
+
+	void respawn();
+	bool isGameOver();
 private:
 	void initSprites();
 	void animate(double dt);
@@ -49,13 +53,14 @@ private:
 	sf::Sprite m_player;
 	
 	double m_speed{ 2.0 };
-
+	bool m_gameOver = false;
 	int m_frameSize = 100;
 	double m_frameTimer = 0.0;
 	double m_timePerFrame = 0.1;
 	int currentFrame = 0;
 	int m_col = 0;
 	int m_currentGrid = -1;
+
 
 	int m_walkFrames = 8;
 	int m_idleFrames = 6;
