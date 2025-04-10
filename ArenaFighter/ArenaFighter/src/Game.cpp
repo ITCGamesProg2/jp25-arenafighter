@@ -404,7 +404,28 @@ void Game::pickupCollisions()
 	if (m_pickup.getHitbox().intersects(m_player.getBounds()))
 	{
 		m_pickup.applyPickupEffect();
-		m_player.m_playerHealthSystem.increaseHealth();
+		if (m_pickup.getType() == PickupType::POISON)
+		{
+			m_player.m_playerHealthSystem.takeDamage(10);
+		}
+		else
+		{
+			m_player.m_playerHealthSystem.increaseHealth();
+		}
+		m_pickup.initPickups();
+	}
+
+	if (m_pickup.getHitbox().intersects(m_orc.getBounds()))
+	{
+		m_pickup.applyPickupEffect();
+		if (m_pickup.getType() == PickupType::POISON)
+		{
+			m_orc.m_orcHealthSystem.takeDamage(30);
+		}
+		else
+		{
+			m_orc.m_orcHealthSystem.increaseHealth();
+		}
 		m_pickup.initPickups();
 	}
 
