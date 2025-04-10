@@ -87,7 +87,7 @@ private:
 	LevelData m_level;
 
 	Pickup m_pickup;
-	
+
 };
 
 #endif // !GAME_HPP

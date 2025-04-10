@@ -47,6 +47,7 @@ Game::Game() :
 	{
 		m_grid.insertGameObjectIntoGrid(&hitbox.getGlobalBounds());
 	}
+
 }
 
 /// <summary>

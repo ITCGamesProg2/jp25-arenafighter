@@ -4,6 +4,7 @@
 #include <Thor/Resources.hpp>
 #include <Thor/Vectors/VectorAlgebra2D.hpp>
 #include "HealthSystem.h"
+#include "HealthBar.h"
 
 
 enum class PlayerState
@@ -66,9 +67,9 @@ private:
 	Direction m_playerDirection;
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
 
-	sf::RectangleShape m_healthBar;
-	sf::RectangleShape m_healthBarBack;
 
 	sf::Shader m_playerOutline;
 	bool m_shaderLoaded;
+
+	std::unique_ptr<HealthBar> m_healthBarFinal;
 };

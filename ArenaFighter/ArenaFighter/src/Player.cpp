@@ -17,6 +17,9 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& t_holder)
 		m_playerOutline.setUniform("outlineColour", sf::Glsl::Vec4(0.5f, 0.0f, 0.5f, 1.0f));
 		m_playerOutline.setUniform("outlineThickness", 0.5f);
 	}
+	sf::Vector2f healthBarInitPos = m_player.getPosition();
+	m_healthBarFinal = std::make_unique<HealthBar>(healthBarInitPos, 50.0f, 15.0f, m_playerHealthSystem.getMaxHealth());
+	m_playerHealthSystem.attachObserver(m_healthBarFinal.get());
 }
 
 void Player::handleKeyInput()
@@ -135,10 +138,9 @@ void Player::render(sf::RenderWindow& window, bool t_debugMode)
 	{
 		window.draw(m_hitbox);
 	}
-	if (m_playerHealthSystem.getHealth() < 200)
+	if (m_playerHealthSystem.getHealth() < m_playerHealthSystem.getMaxHealth())
 	{
-		window.draw(m_healthBarBack);
-		window.draw(m_healthBar);
+		m_healthBarFinal->render(window);
 	}
 }
 
@@ -164,15 +166,6 @@ void Player::initSprites()
 	m_hitbox.setOutlineColor(sf::Color::Green);
 	m_hitbox.setOutlineThickness(1);
 
-	m_healthBar.setSize({ 50, 15 });
-	m_healthBar.setOrigin(m_healthBar.getSize().x / 2, m_healthBar.getSize().y / 2);
-	m_healthBar.setFillColor(sf::Color::Green);
-	m_healthBar.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
-
-	m_healthBarBack.setFillColor(sf::Color::Red);
-	m_healthBarBack.setSize({ 50, 15 });
-	m_healthBarBack.setOrigin(m_healthBarBack.getSize().x / 2, m_healthBarBack.getSize().y / 2);
-	m_healthBarBack.setPosition(m_player.getPosition().x, m_player.getPosition().y - 40);
 }
 
 void Player::animate(double dt)
@@ -208,11 +201,10 @@ void Player::animate(double dt)
 
 void Player::updateHealthBar()
 {
-	float healthPercentage = static_cast<float>(m_playerHealthSystem.getHealth()) / m_playerHealthSystem.getMaxHealth();
-
-	m_healthBar.setSize(sf::Vector2f{50 * healthPercentage, 15});
-	m_healthBar.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
-	m_healthBarBack.setPosition(sf::Vector2f(m_player.getPosition().x, m_player.getPosition().y - 40));
+	sf::Vector2f newPosition = m_player.getPosition();
+	newPosition.x -= 28;
+	newPosition.y -= 60;
+	m_healthBarFinal->setPosition(newPosition);
 }
 
 void Player::keepPlayerInBounds()

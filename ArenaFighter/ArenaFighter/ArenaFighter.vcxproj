@@ -35,6 +35,8 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="HealthObserverInterface.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\HealthSystem.h" />
@@ -48,6 +50,7 @@
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="Pickups.cpp" />
     <ClCompile Include="src\Game.cpp" />
