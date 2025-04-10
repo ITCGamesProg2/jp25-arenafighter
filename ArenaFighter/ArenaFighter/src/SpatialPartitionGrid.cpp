@@ -28,6 +28,11 @@ void SpatialPartitionGrid::insertGameObjectIntoGrid(sf::FloatRect* t_boundingBox
 
 std::vector<sf::FloatRect> SpatialPartitionGrid::getNearbyObjects(const sf::FloatRect* t_boundingBox)
 {
+
+	m_cellsChecked = 0;
+	m_collisionPairs = 0;
+	//m_collisionClock.restart();
+
 	std::vector<sf::FloatRect> nearbyObjects;
 
 	// Convert the position of the top left and bottom right of the game object to a pair of ints representing row and col of grid it resides in
@@ -39,11 +44,13 @@ std::vector<sf::FloatRect> SpatialPartitionGrid::getNearbyObjects(const sf::Floa
 	{
 		for (int y = topLeft.second - 1; y <= bottomRight.second; y++)
 		{
+			m_cellsChecked++;
 			// This if statement is making sure the object exists within a cell in the grid
 			if (grid.count({ x, y }))
 			{
 				for (const auto& rectangle : grid.at({ x,y }))
 				{
+					m_collisionPairs++;
 					// This is ensuring we dont add the object passed to the function isnt included in vector of nearby objects
 					if (!(rectangle->left == t_boundingBox->left && rectangle->top == t_boundingBox->top &&
 						rectangle->width == t_boundingBox->width && rectangle->height == t_boundingBox->height))
@@ -54,12 +61,33 @@ std::vector<sf::FloatRect> SpatialPartitionGrid::getNearbyObjects(const sf::Floa
 			}
 		}
 	}
+	//m_collisionTime = m_collisionClock.getElapsedTime().asMilliseconds();
+
+	m_maxCellsChecked = std::max(m_maxCellsChecked, m_cellsChecked);
+	m_maxCollisionPairs = std::max(m_maxCollisionPairs, m_collisionPairs);
+	//m_maxCollisionTime = std::max(m_maxCollisionTime, m_collisionTime);
+
 	return nearbyObjects;
 }
 
 
 void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRect* t_playerBounds, bool t_debugMode)
 {
+	m_debugStringStream.str("");
+	m_debugStringStream.clear();
+
+	m_debugStringStream << "Current:\n"
+		<< "Cells Checked: " << m_cellsChecked << "\n"
+		<< "Collision Pairs: " << m_collisionPairs << "\n"
+		<< "Time taken to check: " << m_collisionTime << " microseconds!\n"
+		<< "Maximums: \n"
+		<< "Max Cells Checked: " << m_maxCellsChecked << "\n"
+		<< "Maxumum Pairs Checked: " << m_maxCollisionPairs << "\n"
+		<< "Max Time: " << m_maxCollisionTime << " microseconds\n";
+
+	m_debugInfoText.setString(m_debugStringStream.str());
+	
+
 	sf::RectangleShape cell;
 	cell.setSize(sf::Vector2f(m_cellWidth, m_cellHeight));
 	cell.setFillColor(sf::Color(0, 0, 255, 128));
@@ -90,6 +118,7 @@ void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRe
 				t_window.draw(cell);
 			}
 		}
+		t_window.draw(m_debugInfoText);
 	}
 
 }
@@ -100,4 +129,17 @@ void SpatialPartitionGrid::drawGrid(sf::RenderWindow& t_window,const sf::FloatRe
 void SpatialPartitionGrid::clearGrid()
 {
 	grid.clear();
+}
+
+void SpatialPartitionGrid::initFontForDebug()
+{
+	if (!m_font.loadFromFile("ASSETS/FONTS/PixelPurl.ttf"))
+	{
+		std::cout << "Error loading font for debug info pane!\n";
+	}
+
+	m_debugInfoText.setFont(m_font);
+	m_debugInfoText.setFillColor(sf::Color::White);
+	m_debugInfoText.setCharacterSize(20);
+	m_debugInfoText.setPosition(1150.0f, 10.0f);
 }

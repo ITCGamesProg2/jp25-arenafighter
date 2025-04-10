@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "GameObject.h"
+#include <iostream>
+#include "sstream"
 
 class SpatialPartitionGrid
 {
@@ -9,6 +11,18 @@ private:
 	float m_cellHeight;
 	std::map < std::pair<int, int>, std::vector<sf::FloatRect*>> grid;
 
+
+	int m_cellsChecked = 0;
+	int m_collisionPairs = 0;
+	
+
+	int m_maxCellsChecked = 0;
+	int m_maxCollisionPairs = 0;
+	
+	
+	sf::Font m_font;
+	sf::Text m_debugInfoText;
+	std::stringstream m_debugStringStream;
 
 public:
 	
@@ -41,5 +55,10 @@ public:
 
 
 	void clearGrid();
+
+	void initFontForDebug();
+	float m_maxCollisionTime = 0.0f;
+	float m_collisionTime = 0.0f;
+	sf::Clock m_collisionClock;
 };
 

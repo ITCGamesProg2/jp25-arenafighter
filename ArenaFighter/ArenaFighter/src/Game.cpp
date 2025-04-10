@@ -244,6 +244,8 @@ void Game::setupTest()
 
 void Game::testCollisions()
 {
+	m_grid.m_collisionClock.restart();
+
 	std::vector<sf::FloatRect> nearbyObjects = m_grid.getNearbyObjects(&m_player.getBounds());
 
 	m_collisionLine[0] = m_player.getPosition();
@@ -275,6 +277,9 @@ void Game::testCollisions()
 			playerCollisionWithObstacles(hitbox.getGlobalBounds());
 		}
 	}
+
+	m_grid.m_collisionTime = m_grid.m_collisionClock.getElapsedTime().asMicroseconds();
+	m_grid.m_maxCollisionTime = std::max(m_grid.m_maxCollisionTime, m_grid.m_collisionTime);
 }
 
 
@@ -349,6 +354,8 @@ void Game::setupText()
 	m_scoreText.setPosition(50, 30);
 	m_scoreText.setCharacterSize(34);
 	m_scoreText.setFillColor(sf::Color::White);
+
+	m_grid.initFontForDebug();
 }
 
 void Game::pickupCollisions()
