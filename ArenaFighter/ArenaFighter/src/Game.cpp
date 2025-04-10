@@ -401,7 +401,7 @@ void Game::setupText()
 
 void Game::pickupCollisions()
 {
-	if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POTION)
+	if (m_pickup.getHitbox().intersects(m_player.getBounds()))
 	{
 		m_pickup.applyPickupEffect();
 		m_player.m_playerHealthSystem.increaseHealth();
