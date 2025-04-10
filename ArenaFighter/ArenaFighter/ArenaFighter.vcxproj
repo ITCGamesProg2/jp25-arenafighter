@@ -33,40 +33,40 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cell.h" />
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="HealthBar.h" />
-    <ClInclude Include="HealthObserverInterface.h" />
-    <ClInclude Include="HealthPotion.h" />
-    <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\HealthSystem.h" />
-    <ClInclude Include="include\LevelLoader.h" />
-    <ClInclude Include="include\Orc.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\SpatialPartitionGrid.h" />
-    <ClInclude Include="LevelData.h" />
-    <ClInclude Include="Pickups.h" />
-    <ClInclude Include="PickupStrategy.h" />
-    <ClInclude Include="PosionPotion.h" />
+    <None Include="ASSETS\SHADERS\playerOutline.frag" />
+    <None Include="levelData\level1.yaml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="HealthBar.cpp" />
-    <ClCompile Include="LevelData.cpp" />
-    <ClCompile Include="Pickups.cpp" />
+    <ClCompile Include="src\Cell.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\HealthSystem.cpp" />
+    <ClCompile Include="src\LevelData.cpp" />
     <ClCompile Include="src\LevelLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Orc.cpp" />
+    <ClCompile Include="src\Pickups.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SpatialPartitionGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ASSETS\SHADERS\playerOutline.frag" />
-    <None Include="levelData\level1.yaml" />
+    <ClInclude Include="include\Cell.h" />
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Grid.h" />
+    <ClInclude Include="include\HealthBar.h" />
+    <ClInclude Include="include\HealthObserverInterface.h" />
+    <ClInclude Include="include\HealthPotion.h" />
+    <ClInclude Include="include\HealthSystem.h" />
+    <ClInclude Include="include\LevelData.h" />
+    <ClInclude Include="include\LevelLoader.h" />
+    <ClInclude Include="include\Orc.h" />
+    <ClInclude Include="include\Pickups.h" />
+    <ClInclude Include="include\PickupStrategy.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PosionPotion.h" />
+    <ClInclude Include="include\SpatialPartitionGrid.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

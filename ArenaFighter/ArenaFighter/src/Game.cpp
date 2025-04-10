@@ -22,13 +22,7 @@ Game::Game() :
 
 	setupText();
 
-	std::vector<int> vector = m_searchGrid.breadthFirst(3, 3);//calls search function with start and destination
-
-	std::cout << "\n\n breath search: "; //output result
-	for (int i : vector) {
-		std::cout << i << " ";
-	}
-	int currentLevel = 1; // Will generate an exception if level loading fails. 
+	int currentLevel = 1; 
 	try
 	{
 		LevelLoader::load(currentLevel, m_levelData);
@@ -413,20 +407,16 @@ void Game::pickupCollisions()
 		m_player.m_playerHealthSystem.increaseHealth();
 		m_pickup.initPickups();
 	}
-	
-	
+
 }
 
 
 void Game::generateObstacles() 
 {
-	std::cout << "generating";
-	// Replace the ? With the actual values for the wall image 
 	sf::IntRect wallRect(0, 0, 424, 408);
 	// Create the Walls 
 	for (auto const& obstacle : m_levelData.m_obstacles)
 	{
-		std::cout << "created obstacle";
 		sf::Sprite sprite;
 		sprite.setTexture(m_obstacleTexture);
 		sprite.setTextureRect(wallRect);
