@@ -36,12 +36,14 @@ public:
 	void setMovePath(std::vector<int>);
 
 	int getDeaths();
+	void reset();//used to reset orc on game restart
 	int isAttackReady();
 private:
 	void gridToCoordinate();
 	void initSprites();
 	void animate(double dt);
 	void respawn();
+
 
 	sf::Sprite m_orc;
 	
@@ -83,3 +85,4 @@ private:
 	bool m_shaderLoaded;
 	
 };
+
