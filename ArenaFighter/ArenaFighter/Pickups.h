@@ -2,7 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
-
+#include "PickupStrategy.h"
+#include "HealthPotion.h"
+#include "PosionPotion.h"
+#include <memory>
 
 enum class PickupType
 {
@@ -25,6 +28,8 @@ public:
 	
 
 	PickupType getType();
+
+	void applyPickupEffect();
 private:
 
 	sf::Sprite m_pickupSprite;
@@ -32,4 +37,5 @@ private:
 	sf::RectangleShape m_hitbox;
 
 	thor::ResourceHolder<sf::Texture, std::string>& m_holder;
+	std::unique_ptr<PickupStrategy> m_potionStrat;
 };

@@ -37,6 +37,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HealthObserverInterface.h" />
+    <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\HealthSystem.h" />
@@ -46,6 +47,8 @@
     <ClInclude Include="include\SpatialPartitionGrid.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="Pickups.h" />
+    <ClInclude Include="PickupStrategy.h" />
+    <ClInclude Include="PosionPotion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />

@@ -362,14 +362,11 @@ void Game::pickupCollisions()
 {
 	if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POTION)
 	{
+		m_pickup.applyPickupEffect();
 		m_player.m_playerHealthSystem.increaseHealth();
 		m_pickup.initPickups();
 	}
-	else if (m_pickup.getHitbox().intersects(m_player.getBounds()) && m_pickup.getType() == PickupType::POISON)
-	{
-		m_player.m_playerHealthSystem.takeDamage(20);
-		m_pickup.initPickups();
-	}
+	
 	
 }
 

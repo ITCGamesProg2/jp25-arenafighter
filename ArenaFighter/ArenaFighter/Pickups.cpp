@@ -11,7 +11,6 @@ Pickup::Pickup(thor::ResourceHolder<sf::Texture, std::string>& t_holder) : m_hol
 
 void Pickup::initPickups()
 {
-	
 	m_pickupSprite.setTexture(m_holder["tileMapPickup"]);
 	m_pickupSprite.setOrigin({ 16,16 });
 	m_pickupSprite.setScale(2.0f, 2.0f);
@@ -23,31 +22,22 @@ void Pickup::initPickups()
 	m_hitbox.setOutlineThickness(1);
 
 
-	//m_pickupSprite.setOrigin(m_pickupSprite.getGlobalBounds().width / 2, m_pickupSprite.getGlobalBounds().height / 2);
+	
 
 	// Roll a random number from 0-1 and set type based on this number
 	int randomNumber = rand() % 2;
 	if (randomNumber == 0)
 	{
-		m_pickupType = PickupType::POTION; 
+		m_potionStrat = std::make_unique<HealthPotion>();
+		m_pickupType = PickupType::POTION;
 	}
-	if (randomNumber == 1)
+	else
 	{
-		m_pickupType = PickupType::POISON; 
+		m_potionStrat = std::make_unique<PoisonPotion>();
+		m_pickupType = PickupType::POISON;
 	}
-	
 
-	// Based on pickup type, change texture
-	if (m_pickupType == PickupType::POTION)
-	{
-		//144x 128y
-		m_pickupSprite.setTextureRect(sf::IntRect{ 144, 128, 16, 16 });
-	}
-	if (m_pickupType == PickupType::POISON)
-	{
-		m_pickupSprite.setTextureRect(sf::IntRect{ 112, 128, 16, 16 });
-
-	}
+	m_pickupSprite.setTextureRect(m_potionStrat->getTextureRect());
 	
 	sf::Vector2f newPosition = { static_cast<float>(rand() % 1200) + 100, static_cast<float>(rand() % 600) + 100 };
 	m_pickupSprite.setPosition(newPosition);
@@ -82,6 +72,14 @@ sf::Vector2f Pickup::returnHitboxPosition() const
 PickupType Pickup::getType()
 {
 	return m_pickupType;
+}
+
+void Pickup::applyPickupEffect()
+{
+	if (m_potionStrat)
+	{
+		m_potionStrat->applyPotionEffect();
+	}
 }
 
 
