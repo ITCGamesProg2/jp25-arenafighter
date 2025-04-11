@@ -20,7 +20,7 @@ This made it very easy to add health for the orc and player as we can now add ne
 it also kept our code clean and seperated and independent which helped with preventing and solving any bugs we ran into.
 
 
-Our SRP, OCP and DIP are built into out observer and strategy patterns so the UML Diagrams are the same for this section also:
+Our SRP, OCP and DIP are built into our observer and strategy patterns so the UML Diagrams are the same for this section also:
 
 ```mermaid
 classDiagram
